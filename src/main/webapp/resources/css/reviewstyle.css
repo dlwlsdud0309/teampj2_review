@@ -1,0 +1,329 @@
+.clear{
+	clear: both;
+}
+body {
+	font-family: Nanum Gothic;
+}
+/* =============== reviewBoard=============== */
+div{
+	height: auto;
+	display: block;
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	text-decoration:none;
+}
+a:active{
+	text-decoration:none;
+}
+ul{
+	list-style: none;
+}
+.pinfo_review{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	border-top: 3px solid black;
+	border-bottom: 1px solid #ddd;
+}
+.pinfo_review>a{
+	display: inline-block;
+	padding: 30px 50px;
+	color: black;
+	font-weight: bolder;
+	font-size: smaller;
+}
+.pinfo_review>a:hover{
+	color: #AF0006;
+}
+.p_info{
+	margin: 40px 0px;
+}
+.p_info_div{
+	margin: 60px 0px;
+	word-spacing: 4px;
+}
+#reviewSize>img{
+	padding-top: 35px;
+	padding-bottom: 65px;
+}
+.reviewtitle_writebutton{
+	margin: 40px 0px;
+}
+.tablerow{
+	display: table-row;
+}
+.tablecell{
+	display: table-cell;
+}
+/* .div_selectType, .div_searchbox{
+	float: left;
+} */
+.review_table{  display: table; width: 70%; margin-left:auto; margin-right:auto; }
+.review_total{	cursor: pointer; }
+
+.row{
+	display: table-row; /* tr */
+}
+.cell{	display: table-cell; /* td */ padding: 5px; }
+.col1{
+	width: 100%;
+	vertical-align: top;
+}
+.col2{
+	width: 20%;
+}
+.img_box>img{
+	width: 100px;
+	height: 100px;
+}
+.htag>h3{
+	position: relative;
+	top: -10px;
+}
+.user_content{
+	width: 90%;
+}
+.u_content{
+	width: 80%;
+	overflow: hidden;
+	/* white-space: nowrap; *//* 두줄 이상을 할 수 없음 */
+	word-break: break-word;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	/* cursor: pointer; */
+}
+.u_contentGray{
+	/* background-color: #eee; */
+	cursor: pointer;
+}
+.atag{
+	/* display: hidden; */
+	/* visibility: hidden; */
+}
+.paging>a{
+	text-align: center;
+	position: relative;
+	text-decoration: none;
+}
+.paging>a:hover{
+	text-decoration: none;
+}
+.atag{
+	visibility: hidden;
+}
+
+/* =============== 별점 =============== */
+.avgstar_totalcount{
+	margin: 60px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.avg_star{
+	text-align: center;
+}
+.star {
+   position: relative;
+   font-size: 2rem;
+   color: #ddd;
+ }
+ 
+.star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.star span {
+  width: 0;
+  position: absolute; 
+  left: 0;
+  color: #ff7f00;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* =============== reviewBoard_star =============== */
+.reviewBoard_star {
+   position: relative;
+   font-size: 2rem;
+   color: #ddd;
+ }
+ 
+.reviewBoard_star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.reviewBoard_star span {
+  width: 0;
+  position: absolute; 
+  left: 0;
+  color: #ff7f00;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+
+
+/* =============== review-replyToggle=============== */
+.reply_label{
+	color: red;
+	border: 1px solid black;
+	padding: 4px;
+}
+input#replyToggle{
+	display: none;
+}
+div#reply_box{
+	display: none;
+}
+input#replyToggle:checked+div#reply_box{
+	display: block;
+}
+
+/* =============== 더보기 =============== */
+.js-load {
+    display: none;
+}
+.js-load.active {
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+.js-load.active:last-child {
+	border-bottom: none;
+}
+.is_comp.js-load:after {
+    display: none;
+}
+.btn-wrap, .lists, .main {
+    display: block;
+}
+.main {
+    max-width: 100%;
+    margin: 0 auto;
+}
+.lists {
+    margin-bottom: 4rem;
+}
+.lists__item {
+    padding: 10px;
+    /* background: #EEE; */
+}
+.lists__item:nth-child(2n) {
+    /* background: #59b1eb;
+    color: #fff; */
+}
+.btn-wrap {
+    text-align: center;
+}
+.btn-wrap>a{
+	font-weight: bolder;
+	color: black;
+	padding: 15px 170px;
+	border: 1px solid #ddd;
+	position: relative;
+	top: -54px;
+	background-color: white;
+}
+.btn-wrap>a>img{
+	width: 25px;
+	vertical-align: middle;
+}
+
+
+/* =============== reviewWriteview=============== */
+.styleClassReviewWriteview{
+	opacity: 0;
+	display: none;
+	position: relative;
+	left: 100px;
+	width: auto;
+	padding: 20px;
+	background-color: white;
+	
+	width: 400px;
+	height: 100%;
+}
+
+#styleID_ReviewWriteview{
+	position: relative;
+}
+.popup_review_title{
+	border-bottom: 3px solid black;
+	font-weight: bolder;
+}
+#title_content{
+	padding: 10px;
+	top: 50px;
+	/* position: absolute; */
+}
+
+
+
+/* =============== reviewMylistview=============== */
+.mileage_box{
+	width: 80%;
+	border-top: 3px solid black;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	padding: 40px 25px;
+}
+.mileage_span{
+	display: inline-block;
+	float: right;
+}
+.review_info>ul>li{
+	list-style-type: none;
+	line-height: 25px;	
+}
+li{
+	list-style-type: none;
+}
+.class_review_orderlist{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	padding: 10px;
+	margin: 50px 50px;
+}
+.small_gray{
+	font-size: small;
+	color: #808080;
+	font-weight: bolder;
+}
+
+.reviewListview_total{
+	display: table;
+	width: 80%;
+	margin: 50px 50px;
+}
+.reviewListview_label{
+	margin: 20px;
+}
+.myreview{
+	padding-bottom: 50px;
+}
+.col11{
+	width: 30%;
+	vertical-align: top;
+}
+.col22{
+	width: 50%;
+}
+.col33{
+	width: 20%;
+}

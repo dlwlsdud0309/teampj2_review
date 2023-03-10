@@ -1,0 +1,2516 @@
+--------------------------------김태훈--------------------------------
+create table member(
+m_id varchar2(50),
+m_pw varchar2(50),
+m_name varchar2(30),
+m_tel varchar2(50),
+m_name2 varchar2(50),
+m_email varchar2(50),
+m_grade varchar2(30),
+m_age number,
+m_gender varchar2(10),
+m_cash number,
+m_filesrc varchar2(50)
+);
+
+alter table member add sha varchar2(100);
+alter table member add rsa varchar2(100);
+
+select * from member;
+commit;
+drop table member;
+delete member where m_id!='TEMP' and m_id!='jointest' and m_id!='micky' and m_id!='admintest';
+delete member where m_id='';
+
+insert into member(m_id,m_pw,m_name,m_tel,m_name2,m_email,m_grade,m_age,m_gender,m_cash,m_filesrc)
+values ('내정보수정테스트','123456','테스트용아이디',1234567,'테스트용아이디','abc@abc.com','bronze',19,'남',10000,'noimg');
+
+select * from member where m_id='jointest' and m_pw='123456';
+select count(*) from member where m_id='jointest';
+SELECT COUNT(*) FROM MEMBER WHERE M_NAME2='닉네임김태훈';
+select(select count(*) from member where m_date >= to_char(trunc(sysdate), 'yyyy/mm/dd')) from dual;
+
+update member set m_pw='123',m_name='정보수정해보기',m_tel='전번',m_name2='정보수정',m_email='이메일',m_grade='silver',m_age=11,m_gender='여',m_cash=250000,m_filesrc='nonoimg' where m_id='admintest';
+
+select count(*) from member where 10<=m_age and m_age<20;
+select count(*) from member where 20<=m_age and m_age<30;
+select count(*) from member where 30<=m_age and m_age<40;
+select count(*) from member where 40<=m_age and m_age<50;
+select count(*) from member where 50<=m_age and m_age<60;
+select count(*) from member where 60<=m_age and m_age<70;
+select count(*) from member where 70<=m_age and m_age<80;
+select count(*) from member where 80<=m_age and m_age<90;
+
+
+select m_id,m_pw,m_name,m_tel,m_name2,m_email,m_grade,m_age,m_gender,m_age,m_cash,m_filesrc from member;
+select m_id,m_pw,m_name,m_tel,m_name2,m_email,m_grade,m_age,m_gender,m_age,m_cash,m_filesrc from
+(select rownum num, n.*from (select * from member)n)where num between 1 and 2;
+
+select * from qna_member;
+
+select * from review;
+
+update member set ;
+create table qna_member(
+q_mno number,
+q_mtitle varchar2(100),
+q_mcontent varchar2(1000),
+q_mreply varchar2(1000),
+q_mid varchar2(30),
+q_mynn char(1),
+q_mdate date,
+q_mgroup number,
+q_mstep number,
+q_mindent number);
+
+create sequence qna_member_q_mno;
+
+select * from qna_member;
+insert into qna_member(q_mno,q_mtitle,q_mcontent,q_mreply,q_mid,q_mynn,q_mdate,q_mgroup,q_mstep,q_mindent)
+values (qna_member_q_mno.nextval,'큐엔에이테스트','내용확인용','답변확인용','문의한아이디','N',sysdate,0,0,0);
+
+select q_mno,q_mtitle,q_mcontent,q_mreply,q_mid,q_mynn,q_mdate,q_mgroup,q_mstep,q_mindent from(
+select rownum num,n.*from(select * from qna_member where q_mynn='A')n) where num between 1 and 12;
+
+
+delete from qna_member;
+rollback;
+select * from qna_member where q_mid = '테스트' and q_mynn != 'A';
+
+select * from qna_member where q_mid='문의한아이디';
+SELECT * FROM QNA_MEMBER WHERE Q_MNO=1;
+commit;
+
+UPDATE QNA_MEMBER SET Q_MSTEP=Q_MSTEP+1 WHERE Q_MGROUP=0 AND Q_MSTEP>0;
+
+SELECT * FROM QNA_MEMBER WHERE Q_MID='테스트' ORDER BY Q_MGROUP DESC,Q_MSTEP ASC;
+
+
+--------------------------------최명화-------------------------------------------------------------------------------------------------------
+create table product(
+p_no varchar2(50), --상품번호
+p_name varchar2(100), --상품명
+p_price number, --가격
+p_cnt number, --재고
+p_color varchar2(20), --색상
+p_size varchar2(20), --사이즈
+p_filesrc varchar2(100), --첨부파일
+p_date date, --입고일
+p_category varchar2(20), --카테고리
+p_info varchar2(1500)); --상품정보
+
+
+commit;
+CREATE SEQUENCE PNO_SEQ
+INCREMENT BY 1 START WITH 101 MAXVALUE 300 MINVALUE 101 CYCLE CACHE 2;
+
+select * from product;
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product;
+select p_name,p_filesrc from product group by p_name,p_filesrc order by p_name;
+
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product where p_no='N101';
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product where p_name='W''S NOVELTY NUPTSE DOWN JACKET P';
+SELECT P_NAME,MIN(P_FILESRC) P_FILESRC FROM PRODUCT GROUP BY P_NAME;
+
+--동일한 내용 보이는것 productMain
+select p_name,p_filesrc from product where p_name='W''S NOVELTY NUPTSE DOWN JACKET P'
+group by p_name,p_filesrc;
+select p_name,p_filesrc,p_color from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET'
+group by p_name,p_filesrc,p_color;
+SELECT P_NAME,P_FILESRC FROM PRODUCT GROUP BY P_NAME,P_FILESRC ORDER BY P_NAME;
+SELECT P_NAME,min(P_FILESRC) P_FILESRC FROM PRODUCT GROUP BY P_NAME;
+SELECT p_color,P_NAME,min(P_FILESRC) P_FILESRC FROM PRODUCT GROUP BY P_NAME,p_color;
+
+SELECT P_NO,P_NAME,P_PRICE,P_CNT,P_COLOR,P_SIZE,P_FILESRC FROM PRODUCT WHERE P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET' AND P_FILESRC='NJ1DN82A_NJ1DN82A_primary';
+
+--상품별 사이즈 확인
+select p_size from (select * from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET');
+select p_no,p_size,p_color,p_cnt from (select * from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET');
+select p_no,p_size,p_color,p_cnt from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET' and p_color='BLACK';
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET' and p_color='BLACK';
+
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product where p_name='W''S NUPTSE HYBRID DOWN BALL JACKET';
+
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product where p_name='W''S NOVELTY NUPTSE DOWN JACKET P' and p_size='085XS' and p_color='SILVER';
+select p_name,p_price,p_color,p_size from product where p_no='N108';
+
+
+drop table order_member;
+drop SEQUENCE ORDER_SEQ;
+delete from order_member;
+
+--2차테이블
+create table order_member(
+om_num varchar2(100), --주문번호
+om_cntnum varchar2(100), --상품주문번호 primary
+p_no varchar2(100), --상품번호
+u_cnt number, --주문수량
+m_id varchar2(100), --아이디
+om_date date, --주문일자
+om_pay varchar2(100), --결제형태
+p_price number, --총액
+om_state varchar2(100), --처리상태(결제완료,취소요청,취소완료,상품준비중,배송완료,구매확정)
+om_cancle varchar2(100), --주문취소여부(N,Y)
+om_cdate date,
+c_reason varchar2(100),
+om_delcancle varchar2(100)
+);
+
+CREATE SEQUENCE ORDER_SEQ INCREMENT BY 1 
+START WITH 1000 MAXVALUE 2000 MINVALUE 1000 CYCLE CACHE 2;
+
+insert into order_member values(TO_CHAR(SYSDATE, 'YYYYMMDD')||'blue1',ORDER_SEQ.NEXTVAL,'N101',2,'blue1',sysdate,'포인트',249000*2,'결제완료','N','',null);
+insert into order_member values(TO_CHAR(SYSDATE, 'YYYYMMDD')||'blue1',ORDER_SEQ.NEXTVAL,'N105',1,'blue1',sysdate,'포인트',249000*1,'결제완료','N','',null);
+insert into order_member values(TO_CHAR(SYSDATE, 'YYYYMMDD')||'blue1',ORDER_SEQ.NEXTVAL,'N108',4,'blue1',sysdate,'포인트',318000*4,'결제완료','N','',null);
+insert into order_member values(TO_CHAR(SYSDATE, 'YYYYMMDD')||'blue2',ORDER_SEQ.NEXTVAL,'N103',1,'blue2',sysdate,'포인트',249000*1,'결제완료','N','',null);
+
+select * from order_member;
+select * from order_member order by om_date desc;
+
+
+--특정상품 가격으로 인서트
+select p_price from product where p_no='N101';
+insert into order_member values(TO_CHAR(SYSDATE,'YYYYMMDD')||'blue2',ORDER_SEQ.NEXTVAL,'N101','','',2,'blue2',sysdate,'포인트',30,'결제완료','N',null);
+insert into order_member values(TO_CHAR(SYSDATE, 'YYYYMMDD')||'blue2',ORDER_SEQ.NEXTVAL,'N103',1,'blue2',sysdate,'포',
+(select p_price from product where p_no='N101'),'결제완료','N',null,null);
+
+select om_cntnum 상품주문번호,om_num 주문번호,p_no 상품번호,u_cnt 주문수량,m_id 아이디,om_date 주문일자,om_pay 결제형태,
+p_price 총액,om_state 처리상태,om_cancle 주문취소요청여부,om_cdate 주문취소일자 from order_member;
+
+
+select p.p_no 상품번호, om.om_num 상품주문번호, p.p_color 색상
+from product p full outer join order_member om
+on p.p_no=om.p_no;
+
+select p.p_no
+from product p inner join order_member om
+on p.p_no=om.p_no;
+
+--조인 join
+select * from order_member;
+select * from product;
+select om.om_date,om.p_no,om.om_num,p.p_color,p.p_size
+from order_member om, product p
+where om.p_no=p.p_no
+order by om_date desc;
+
+--select om_cntnum ,om_num ,p_no ,p_color ,p_size ,u_cnt ,m_id ,om_date ,om_pay ,p_price ,om_state ,om_cancle ,om_cdate  from order_member where m_id='blue1';
+--SELECT OM_CNTNUM,OM_NUM,P_COLOR,P_SIZE,U_CNT,M_ID,OM_DATE,OM_PAY,P_PRICE FROM ORDER_MEMBER WHERE M_ID='blue1';
+SELECT OM_CNTNUM FROM ORDER_MEMBER WHERE M_ID='blue1';
+--SELECT OM_CNTNUM,OM_NUM,P_COLOR,P_SIZE,U_CNT,M_ID,OM_DATE,OM_PAY,P_PRICE FROM ORDER_MEMBER;
+SELECT OM_CNTNUM,OM_NUM FROM (SELECT * FROM ORDER_MEMBER WHERE M_ID='blue1');
+--SELECT OM_CNTNUM,OM_NUM,P_COLOR,P_SIZE,U_CNT,M_ID,OM_DATE,OM_PAY,P_PRICE,p_no FROM ORDER_MEMBER WHERE M_ID='blue1';
+delete from order_member where om_cntnum=1008;
+--주문테이블 수정안
+--주문할때는 상품번호와 주문수량만 입력하고 
+--주문내역을 확인할때는 select join을 실행
+SELECT om_date,P_NO,OM_NUM,M_ID,P_COLOR,P_SIZE,U_CNT,P_PRICE,OM_STATE,P_NAME
+FROM (SELECT om.om_date,OM.P_NO,OM.OM_NUM,OM.M_ID,OM.U_CNT,OM.P_PRICE,OM.OM_STATE,P.P_COLOR,P.P_SIZE,P.P_NAME
+FROM ORDER_MEMBER OM INNER JOIN PRODUCT P ON OM.P_NO=P.P_NO)
+WHERE M_ID='blue2' order by om_date desc;
+
+--주문시 구매한 수량 재고 삭제
+select * from product;
+select p_no,p_name,p_price,p_cnt,p_color,p_size,p_filesrc from product;
+update product set p_cnt=p_cnt-1 where p_no='N101';
+
+
+--page 페이징
+select * from order_member where m_id='blue1';
+select rownum, om.*
+from (select * from order_member where m_id='blue1' order by om_date desc) om
+where rownum between 1 and 5;
+
+select om_num,om_cntnum,p_no,u_cnt,m_id,om_date,om_pay,p_price,om_state,om_cancle,om_cdate,c_reason
+from (select rownum num, om.* 
+from (select * from order_member where m_id='blue1' order by om_date desc) om)
+where num between 6 and 10;
+
+select * from order_member WHERE M_ID='blue1' order by om_date desc;
+SELECT OM_CNTNUM,OM_DATE,P_NO,OM_NUM,M_ID,P_COLOR,P_SIZE,U_CNT,P_PRICE,OM_STATE,P_NAME,P_FILESRC
+FROM(
+select rownum num, pageom.* 
+from (SELECT OM_CNTNUM,OM_DATE,P_NO,OM_NUM,M_ID,P_COLOR,P_SIZE,U_CNT,P_PRICE,OM_STATE,P_NAME,P_FILESRC
+FROM (SELECT OM.OM_CNTNUM,OM.OM_DATE,OM.P_NO,OM.OM_NUM,OM.M_ID,OM.U_CNT,OM.P_PRICE,OM.OM_STATE,P.P_COLOR,P.P_SIZE,P.P_NAME,P.P_FILESRC
+FROM ORDER_MEMBER OM INNER JOIN PRODUCT P ON OM.P_NO=P.P_NO) WHERE M_ID='blue1' ORDER BY OM_DATE DESc) pageom)
+where num between 6 and 10;
+
+--구매시간별 묶기
+select * from order_member;
+select OM_NUM,OM_CNTNUM,P_NO,U_CNT,m_id,om_date,om_pay,p_price,om_state,om_cancle,om_cdate,c_reason from order_member;
+select count(*),OM_NUM from order_member group by om_date,OM_NUM;
+
+select * from order_member where m_id='blue1' ORDER BY OM_DATE DESC;
+select count(*) groupcnt,OM_NUM,om_date from 
+(select om_num,om_cntnum,p_no,u_cnt,m_id,om_date,om_pay,p_price,om_state,om_cancle,om_cdate,c_reason
+from (select rownum num, om.* 
+from (select * from order_member where m_id='blue1' order by om_date desc) om)
+where num between 1 and 5) group by om_date,OM_NUM order by om_date desc;
+
+SELECT COUNT(*) GROUPCNT,OM_NUM FROM 
+(SELECT OM_NUM,OM_CNTNUM,P_NO,U_CNT,M_ID,OM_DATE,OM_PAY,P_PRICE,OM_STATE,OM_CANCLE,OM_CDATE,C_REASON
+FROM (SELECT ROWNUM NUM, OM.* 
+FROM (SELECT * FROM ORDER_MEMBER WHERE M_ID='blue1' ORDER BY OM_DATE DESC) OM)
+WHERE NUM BETWEEN 1 AND 5) GROUP BY OM_DATE,OM_NUM ORDER BY OM_DATE DESC;
+
+SELECT COUNT(*) FROM ORDER_MEMBER WHERE M_ID='blue1';
+
+
+--상품취소요청클릭시 화면단 보기 join
+select * from order_member where OM_CNTNUM='1058';
+SELECT om_cntnum,om_date,P_NO,OM_NUM,M_ID,P_COLOR,P_SIZE,U_CNT,P_PRICE,OM_STATE,P_NAME
+FROM (SELECT om.om_cntnum,om.om_date,OM.P_NO,OM.OM_NUM,OM.M_ID,OM.U_CNT,OM.P_PRICE,OM.OM_STATE,P.P_COLOR,P.P_SIZE,P.P_NAME
+FROM ORDER_MEMBER OM INNER JOIN PRODUCT P ON OM.P_NO=P.P_NO)
+WHERE OM_CNTNUM='1058';
+
+--취소사유 적은후 취소요청하기
+update order_member set OM_CANCLE='Y', C_REASON='단순변심', OM_CDATE=sysdate WHERE OM_CNTNUM='1058';
+
+select * from order_member WHERE OM_CNTNUM='1058';
+
+select max(om_num) om_num from order_member where m_id='blue1';
+
+--
+select count(r_recontent) r_recontent, r_no from review group by r_no order by r_no desc;
+select * from review;
+--
+
+
+
+--배송
+drop table order_delivery;
+drop table delivery_SEQ;
+
+create table order_delivery(
+od_num varchar2(100), --배송번호(sysdate+seq)
+om_num varchar2(100), --주문번호(sysdate+id)
+om_date date, --주문일자
+m_id varchar2(50), --아이디
+addr1 varchar2(20), --배송지주소1(우편번호)
+addr2 varchar2(50), --배송지주소2(주소)
+addr3 varchar2(50), --배송지주소3(상세주소)
+receipt_name varchar2(20), --수령자이름
+receipt_phone varchar2(20), --수령자전화번호
+od_date date, --배송일자
+om_cntnum varchar2(100));
+
+CREATE SEQUENCE delivery_SEQ INCREMENT BY 1 
+START WITH 1000 MAXVALUE 2000 MINVALUE 1000 CYCLE CACHE 2;
+
+insert into order_delivery(od_num,om_num,om_date,m_id,addr1,addr2,addr3,receipt_name,receipt_phone,OD_DATE)
+values(TO_CHAR(SYSDATE, 'YYYYMMDD')||delivery_SEQ.nextval,(select om_num from order_member where om_cntnum='1000'),
+(select om_date from order_member where om_cntnum='1000'),'blue','18588','서울','13호','홍길동','01012345678','','');
+
+select od_num,om_num,om_date,m_id,addr1,addr2,addr3,receipt_name,receipt_phone,od_date from order_delivery;
+
+--통계
+--시간대
+--주문수에 따른 순위 
+select om_cntnum,p_no,u_cnt,TO_CHAR(om_date,'HH') hh from order_member where TO_CHAR(om_date,'HH') between 9 and 12 ;
+
+SELECT 판매량,P_COLOR,P_NAME,P_FILESRC,P_PRICE
+from (SELECT ROWNUM NUM, BESTSELL.* 
+from (select sum(u_cnt) 판매량,p_name,p_filesrc,p_color,p_price
+from (SELECT p.p_no,om.om_date,om.u_cnt,om.om_state,
+p.p_price,p.p_name,p.p_color,p.p_size,p.p_filesrc 
+FROM ORDER_MEMBER om, product p where om.p_no=p.p_no 
+and om_state='구매확정' and TO_CHAR(OM_DATE,'HH24')='22')
+group by p_name,p_filesrc,p_color,p_price order by 판매량 desc) BESTSELL)
+WHERE ROWNUM BETWEEN 1 AND 5;
+
+-----------------------------이진영--------------------------------------------------------------------------------------------------------
+show user;
+
+
+create table review(
+r_no number,
+m_id varchar2(100),
+r_title varchar2(125),
+r_content varchar2(1000),
+r_id varchar2(100),
+r_retitle varchar2(125),
+r_recontent varchar2(1000),
+r_ynn varchar2(10) default 'n',
+r_date date default sysdate,
+r_group number default 0,
+r_filesrc varchar2(200),
+r_score number default 0,
+p_no varchar2(50),
+om_cntnum varchar2(100)
+);
+
+create sequence review_seq;
+insert into review values(review_seq.nextval,'micky','search별점순 확인','가사 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 남산위에 저 소나무 철갑을 두른듯 바람서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세','','','','n',sysdate,review_seq.currval,0,0,'NM5MN53D_NM5MN53D_primary2.jpg',4,'N109','1011');
+commit;
+
+
+insert into member values('TEMP','123456','김선달','01011112222','대동강김삿갓',
+'a@b.com','gold',43,'m',50000,'');
+
+commit;
+
+
+--===
+--2023-02-06
+--별점순
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND r_content like '%가사%'
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+order by r_score desc;
+
+
+--관리자답글제외
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND r_content like '%가사%'
+order by r_score desc, R_GROUP DESC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+--기존 select 쿼리에 AND r_content like '%가사%' 넣은 것
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND r_content like '%가사%'
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+        
+--기존 select 쿼리에 AND r_content like '%가사%' 넣고 재정렬 한 것
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND R_CONTENT LIKE '%가사%'
+ORDER BY R_SCORE DESC, R_GROUP DESC) R);
+--      WHERE ROWNO BETWEEN 1 AND 10;
+
+select count(*) from
+(SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC) R));
+
+select * from review;
+
+SELECT COUNT(*) FROM
+(SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R_SCORE DESC, R_GROUP DESC) R));
+
+select * from review where r_content like '%가사%' ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+
+
+--=========================
+--2023-02-07
+
+-----------------------------------------------------------
+--기존 select 쿼리에 AND r_content like '%가사%' 넣고 재정렬 한 것
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND R_CONTENT LIKE '%확인%'
+ORDER BY R_GROUP DESC, R_STEP ASC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+------------------------------------------------------------------
+
+select count(*) from
+(SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC) R));
+
+select * from review;
+
+SELECT COUNT(*) FROM
+(SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R_SCORE DESC, R_GROUP DESC) R));
+
+select * from review where r_content like '%가사%' ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+--검색했을 때 글의 개수 정렬까지 확인
+select R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+from (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+where r_content like '%확인%'
+and ROWNO BETWEEN 1 AND 10
+order by R_SCORE DESC, R_GROUP DESC;
+---------------------------------------------------
+
+select count(*) from review where r_content like '%확인%' ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+SELECT COUNT(*) FROM REVIEW WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+SELECT * FROM REVIEW WHERE R_CONTENT LIKE '%default%'
+ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+commit;
+
+
+--기존쿼리
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+--
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+--
+WHERE R_CONTENT LIKE '%확인%'
+and ROWNO BETWEEN 1 AND 10
+ORDER BY R_GROUP DESC;
+
+select * from review;
+SELECT COUNT(*) FROM REVIEW order by r_date desc;
+
+
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+SELECT COUNT(*) FROM REVIEW where r_content like '%%';
+
+SELECT COUNT(*) FROM REVIEW WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_GROUP DESC, R_STEP ASC;
+SELECT * FROM REVIEW WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_GROUP DESC, R_STEP ASC;
+
+
+--최신순 게시글 수
+SELECT COUNT(*) FROM REVIEW WHERE R_CONTENT LIKE '%가사%'
+ORDER BY R_GROUP DESC, R_STEP ASC;
+--최신순 게시글 내용
+SELECT * FROM REVIEW WHERE R_CONTENT LIKE '%가사%'
+ORDER BY R_GROUP DESC, R_STEP ASC;
+
+
+--별점순
+SELECT COUNT(*) FROM REVIEW WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC;
+--별점순 게시글 내용
+SELECT * FROM REVIEW WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+select * from review where r_no=11;
+
+
+----------------------------------------------
+--기존쿼리
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+--검색어 추가, 최신순 정렬
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE R_CONTENT LIKE '%확인%'
+AND ROWNO BETWEEN 1 AND 10
+ORDER BY R_GROUP DESC;
+
+--검색어 추가, 별점순 정렬
+SELECT ROWNUM, R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R)
+WHERE R_CONTENT LIKE '%확인%'
+AND ROWNO BETWEEN 1 AND 10
+ORDER BY R_SCORE DESC, R_GROUP DESC;
+
+--최신순
+select count(*) from review where r_content like '%확인%' order by r_score;
+select * from review where r_content like '%확인%';
+
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+where r_content like '%확인%'
+)
+where ROWNO BETWEEN 1 AND 10;
+        
+        
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC,R_GROUP DESC
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+--====
+--r_score 평균 별점 구하기
+select sum(r_score) from review;
+select * from review;
+
+select * from product;
+
+SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC;
+
+
+SELECT * FROM REVIEW;
+
+
+
+--product와 join 확인
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%' --include3
+ORDER BY R_SCORE DESC,R_GROUP DESC--include3
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM REVIEW;
+
+----------------------------------------
+--reviewBoard rownum, join 쿼리 재수정
+--select했을 때 Product 테이블의 p_no, p_color, p_size가 나와야함
+--쿼리 재수정 필요 -참고용
+SELECT ROWNUM ROWNO,R.* FROM(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%확인%' --include3
+AND ROWNUM BETWEEN 1 AND 10
+ORDER BY R_SCORE DESC,R_GROUP DESC; --include3
+--쿼리 재수정 필요
+
+
+
+--reviewDao.xml
+--기존1 --최신순
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+------------------------------------수정시작 기존1 --최신순
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+
+and ROWNUM BETWEEN 1 AND 10;
+
+
+--기존2 별점순
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+------------------------------------수정시작 --기존2 별점순
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+and ROWNUM BETWEEN 1 AND 10
+
+ORDER BY R_SCORE DESC;
+
+
+--기존3 최신, 별점 둘 다(checkbox에 해당)
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+ORDER BY R_SCORE DESC,R_GROUP DESC
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+
+
+------------------------------------수정시작 --기존3 최신, 별점 둘 다(checkbox에 해당)
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+WHERE R_CONTENT LIKE '%확인%'
+and ROWNUM BETWEEN 1 AND 10
+
+ORDER BY R_SCORE DESC,R_GROUP DESC;
+
+
+--기존4
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE,P_NO
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R      
+)
+where ROWNUM BETWEEN 1 AND 10;
+
+
+------------------------------------수정시작 기존1 --최신순
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+
+and ROWNUM BETWEEN 1 AND 10;
+
+
+------------------------------------수정시작 --기존2 별점순
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+and
+ROWNUM BETWEEN 1 AND 10
+
+ORDER BY R_SCORE DESC;
+
+
+------------------------------------수정시작 --기존3 최신, 별점 둘 다(checkbox에 해당)
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+and
+ROWNUM BETWEEN 1 AND 10
+
+ORDER BY R_SCORE DESC,R_GROUP DESC;
+
+
+------------------------------------수정시작 --기존4 최신, 별점 둘 다(checkbox에 해당)
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+where
+
+ROWNUM BETWEEN 1 AND 10;
+
+
+
+------------------------------------------------------------------------
+--페이징이 또 안된다..
+--출력확인
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+AND ROWNUM BETWEEN 1 AND 10;
+                
+--                
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+AND ROWNUM BETWEEN 1 AND 10
+ORDER BY R_SCORE DESC;
+--           
+
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%확인%'
+AND
+ROWNUM BETWEEN 1 AND 10
+ORDER BY R_SCORE DESC,R_GROUP DESC;     
+
+--
+SELECT ROWNUM,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,P.P_NO,
+P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+R_CONTENT LIKE '%%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+
+select * from review;
+
+
+--==
+--modify에서 별점 수정 추가
+UPDATE REVIEW SET R_TITLE='sql수정확인',
+      R_CONTENT='별점수정추가', R_SCORE=4
+      WHERE R_NO=27;
+        
+        commit;
+        
+        
+
+--==
+--20230213
+--product 필드 상품등록일 추가
+select * from product;
+
+select * from order_member;
+
+select * from review;
+
+--
+--마이페이지 안에 후기 테이블을 list로 작성하기 위해서는
+--product와 order_member, 그리고 review테이블 3개를 join해야함
+--product의 상품명, 상품 이미지, order_member의 주문한 유저 id, review 테이블의 r_content
+
+select * from review where m_id='jointest' order by r_group desc, r_step asc;
+
+SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+AND M.M_ID='jointest'
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC;
+        
+commit;
+
+select * from review;
+--review테이블에 p_no추가 시 p_no필드 값이 null이면 join했을 때 출력되지 않음
+--최신순 정렬
+SELECT ROWNUM,R.* FROM(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE
+
+R_CONTENT LIKE '%2%'
+AND
+
+ROWNUM BETWEEN 1 AND 10;
+
+
+commit;
+
+
+--※※※※※※※※※※※※※※ 최대한 원래 쿼리문에서 변동없도록 ※※※※※※※※※※※※※※※※
+--SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+--      R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+--      FROM (SELECT ROWNUM ROWNO,R.* FROM
+--      (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+--      R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+--      FROM MEMBER M, REVIEW R
+--      WHERE M.M_ID=R.M_ID
+--      ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+--PARAM=4
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+--include
+)
+WHERE ROWNUM BETWEEN 1 AND 10;
+      
+        
+--최신, 별점순
+SELECT ROWNUM,R_NO,M_ID,R_TITLE,R_CONTENT,R_ID,R_RETITLE,
+R_RECONTENT,R_YNN,R_DATE,R_GROUP,R_STEP,R_INDENT,R_FILESRC,R_SCORE
+FROM (SELECT ROWNUM ROWNO,R.* FROM
+(SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE
+FROM MEMBER M, REVIEW R
+WHERE M.M_ID=R.M_ID
+ORDER BY R.R_GROUP DESC, R.R_STEP ASC) R
+
+---include--
+WHERE R_CONTENT LIKE '%%'
+        ORDER BY R_SCORE DESC,R_GROUP DESC
+---include--
+
+)
+WHERE ROWNO BETWEEN 1 AND 10;
+        
+                                    --@@@@@@@@@@@@@@@@@@@@@@@@정렬 새 쿼리@@@@@@@@@@@@@@@@@@@@@@@@@
+--review, product, member join하기
+--include를 2개 사용한다면......................... 안해도 될 듯
+--※※※※※주의※※※※※처음 했던 쿼리와 결과가 다름...
+--P.P_CATEGORY 추가
+
+--최신순
+SELECT ROWNUM, R.*
+from (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+
+
+--별점순
+SELECT ROWNUM, R.*
+from (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_SCORE DESC,
+
+R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+
+
+--별점, 최신순 --별점순과 동일..
+SELECT ROWNUM, R.*
+from (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_SCORE DESC,
+
+R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+
+
+--param4 --최신순과 동일
+SELECT ROWNUM, R.*
+from (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+                                    --@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                                    
+                                    
+SELECT COUNT(*) FROM REVIEW WHERE R_CONTENT LIKE '%확인%';
+
+select * from review order by r_group desc, r_step;
+select * from product;
+
+select * from ORDER_MEMBER;
+
+--=====
+--product에서 pname으로 찾기
+--param4 --최신순과 동일
+SELECT ROWNUM, R.*
+from (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_GROUP DESC, R.R_STEP ASC) R
+WHERE R_CONTENT LIKE '%%'
+AND
+P_NAME LIKE '%W''S NUPTSE HYBRID DOWN BALL JACKET%'
+AND
+ROWNUM BETWEEN 1 AND 10;
+
+SELECT ROWNUM, R.*
+FROM (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+ORDER BY
+
+R.R_GROUP DESC, R.R_STEP ASC) R;
+
+
+SELECT ROWNUM, R.*
+FROM (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_CATEGORY
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+
+and r_content like '%%'
+
+ORDER BY
+R.R_GROUP DESC, R.R_STEP ASC) R;
+
+
+
+--==
+--20230215 별점순 2차정렬
+SELECT ROWNUM, R.*
+FROM (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND R.R_CONTENT like '%확인%'
+ORDER BY
+    
+    R_SCORE DESC, R_GROUP DESC
+) R;
+
+
+--게시글에 달린 답글 수
+select count(r_recontent) from review where r_no=14;
+SELECT COUNT(R_RECONTENT) FROM REVIEW WHERE R_NO=14;
+
+update review set r_id='admintest', r_retitle='믹키 스포츠웨어 온라인 스토어', r_recontent='저희 쇼핑몰을 이용해주셔서 감사합니다.', r_ynn='y' where r_no=42;
+commit;
+
+select * from review;
+
+
+
+--==
+--2023-02-16
+SELECT COUNT(R_RECONTENT) r_recontentcnt FROM REVIEW group by r_no;
+
+SELECT COUNT(*) FROM REVIEW where p_name like '%W''S NUPTSE HYBRID DOWN BALL JACKET%';
+
+SELECT ROWNUM, R.*
+FROM (SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET'
+
+) R;
+        
+        
+SELECT R.R_NO,M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NO,P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET';
+        
+SELECT count(*)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET';
+
+
+
+--======
+--2023-02-17
+--view 사용하기
+
+create view review_tempview
+as
+select om_cntnum, p_no, om_state
+from order_member;
+
+select * from review_tempview;
+
+select o.om_cntnum, rt.p_no
+from order_member o, review_tempview rt
+where o.p_no=rt.p_no
+order by om_cntnum;
+
+drop view review_tempview;
+
+
+select * from review;
+commit;
+
+UPDATE REVIEW SET R_ID='',
+      R_RETITLE='', R_RECONTENT='',
+      R_YNN='n' WHERE R_NO=47;
+
+
+
+--==
+--20230220
+delete from review;
+select * from review;
+
+INSERT INTO REVIEW VALUES(REVIEW_SEQ.NEXTVAL,'jointest',
+      '리뷰제목','리뷰내용','','','','n',SYSDATE,
+      REVIEW_SEQ.CURRVAL,0,0,'땅이여람쥐.jpg',5,'N107',1054);
+commit;
+select * from review;
+
+select * from product;
+select * from order_member where m_id='jointest';
+select p_no from order_member where m_id='TEMP';
+
+delete from order_member where m_id='TEMP';
+commit;
+
+SELECT ORDER_MEMBER.OM_CNTNUM,ORDER_MEMBER.OM_NUM,PRODUCT.P_NO,ORDER_MEMBER.U_CNT,ORDER_MEMBER.M_ID,
+ORDER_MEMBER.OM_DATE,ORDER_MEMBER.P_PRICE,ORDER_MEMBER.OM_STATE,
+REVIEW.R_CONTENT,
+PRODUCT.P_NAME,PRODUCT.P_PRICE,PRODUCT.P_COLOR,PRODUCT.P_SIZE,PRODUCT.P_FILESRC
+FROM ORDER_MEMBER
+LEFT JOIN REVIEW
+ON REVIEW.OM_CNTNUM=ORDER_MEMBER.OM_CNTNUM
+LEFT JOIN PRODUCT
+ON PRODUCT.P_NO=ORDER_MEMBER.P_NO
+WHERE ORDER_MEMBER.M_ID='jointest'
+AND ORDER_MEMBER.OM_STATE='결제완료'
+and order_member.om_cancle='N'
+AND REVIEW.R_CONTENT IS NULL
+ORDER BY ORDER_MEMBER.OM_DATE DESC;
+
+SELECT R.R_NO,
+R.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND R.OM_CNTNUM=O.OM_CNTNUM
+AND M.M_ID='jointest'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+ORDER BY R.R_GROUP DESC;
+
+commit;
+
+select * from order_member
+where to_char(om_date,'yy/mm/dd')='23/02/20';
+
+select * from order_member;
+
+update order_member set p_no='N108' where p_no='N109';
+
+select * from order_member where m_id='TEMP';
+select * from product;
+
+SELECT R.*
+FROM (SELECT
+R.R_NO,
+O.OM_CNTNUM,O.P_NO,O.OM_STATE,o.om_cancle,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE R.M_ID=M.M_ID
+AND R.P_NO=P.P_NO
+AND R.M_ID=O.M_ID
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET'
+AND R.R_CONTENT like '%%'
+AND o.OM_STATE='결제완료'
+and o.om_cancle='N'
+ORDER BY
+R_GROUP DESC
+) R;
+
+SELECT ORDER_MEMBER.OM_CNTNUM,ORDER_MEMBER.OM_NUM,PRODUCT.P_NO,ORDER_MEMBER.U_CNT,ORDER_MEMBER.M_ID,
+ORDER_MEMBER.OM_DATE,ORDER_MEMBER.P_PRICE,ORDER_MEMBER.OM_STATE,
+REVIEW.R_CONTENT,
+PRODUCT.P_NAME,PRODUCT.P_PRICE,PRODUCT.P_COLOR,PRODUCT.P_SIZE,PRODUCT.P_FILESRC
+FROM ORDER_MEMBER
+LEFT JOIN REVIEW
+ON REVIEW.OM_CNTNUM=ORDER_MEMBER.OM_CNTNUM
+LEFT JOIN PRODUCT
+ON PRODUCT.P_NO=ORDER_MEMBER.P_NO
+WHERE ORDER_MEMBER.M_ID='jointest'
+AND ORDER_MEMBER.OM_STATE='결제완료'
+AND ORDER_MEMBER.OM_CANCLE='N'
+AND REVIEW.R_CONTENT IS NULL
+ORDER BY ORDER_MEMBER.OM_DATE DESC;
+        
+
+SELECT o.OM_CNTNUM,o.OM_NUM,p.P_NO,o.U_CNT,o.M_ID,
+o.OM_DATE,o.P_PRICE,o.OM_STATE,
+r.R_CONTENT,
+p.P_NAME,p.P_PRICE,p.P_COLOR,p.P_SIZE,p.P_FILESRC
+FROM ORDER_MEMBER o
+LEFT JOIN REVIEW r
+ON r.OM_CNTNUM=o.OM_CNTNUM
+LEFT JOIN PRODUCT p
+ON p.P_NO=o.P_NO
+WHERE o.M_ID='jointest'
+AND o.OM_STATE='결제완료'
+AND o.OM_CANCLE='N'
+AND r.R_CONTENT IS NULL
+ORDER BY o.OM_DATE DESC;
+
+
+select * from order_member
+where to_char(om_date,'yy/mm/dd')='23/02/20' and m_id='jointest';
+select * from product;
+
+SELECT nvl(ROUND(AVG(R.R_SCORE),1),0)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P.P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET';
+
+SELECT nvl(ROUND(AVG(R.R_SCORE),1),0)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P.P_NAME='W''S NOVELTY NUPTSE DOWN JACKET P';
+
+
+SELECT nvl2(ROUND(AVG(R.R_SCORE),1),ROUND(AVG(R.R_SCORE),1),0)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P.P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET';
+
+select * from review where m_id='jointest';
+
+select * from order_member where m_id='jointest';
+
+select * from member;
+
+
+
+
+--==
+--20230221
+select r_filesrc from review;
+
+
+--id 뒤에서 두자리 별점처리하기
+SELECT R.*
+FROM (SELECT
+R.R_NO,
+O.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE R.M_ID=M.M_ID
+AND R.P_NO=P.P_NO
+AND R.M_ID=O.M_ID
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET'
+AND R.R_CONTENT like '%%'
+AND OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+ORDER BY
+    R_GROUP DESC
+) R;
+        
+select replace(M_ID,substr(m_id,-2),'**') from review;
+select M_ID, substr(m_id,1,length(m_id)||lpad('*',3,'*')) from review; --안됨
+select m_id,substr(m_id,LENGTH(m_id)-1) from review;
+select m_id,substr(m_id,-2) from review;
+
+select m_id,substr(m_id,-2,2) from review;
+
+select m_id,rpad(substr(m_id,0,length(m_id)-2),length(m_id),'*') from member;
+
+SELECT R.*
+FROM (SELECT
+R.R_NO,
+O.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+RPAD(SUBSTR(M.M_ID,0,LENGTH(M.M_ID)-2),LENGTH(M.M_ID),'*') M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE R.M_ID=M.M_ID
+AND R.P_NO=P.P_NO
+AND R.M_ID=O.M_ID
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET'
+AND R.R_CONTENT like '%수정%'
+AND OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+ORDER BY
+R_GROUP DESC
+    
+) R;
+
+select * from review;
+select to_char(om_date,'yy/mm/dd HH24:MI:SS') from order_member where m_id='jointest' order by to_char(om_date,'yy/mm/dd HH24:MI:SS');
+delete from review;
+commit;
+
+
+--==
+--20230222
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='qweqwe'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.OM_DATE DESC;
+
+SELECT P_NAME,MIN(P_FILESRC) P_FILESRC FROM PRODUCT GROUP BY P_NAME;
+SELECT P_NAME,MIN(P_FILESRC) P_FILESRC FROM PRODUCT GROUP BY P_NAME;
+
+delete from review;
+select * from review;
+commit;
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='jointest'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.om_cntnum DESC;
+
+select count(*) from (SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='qweqwe'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL);
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='qweqwe'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.om_cntnum DESC;
+
+select * from review;
+
+SELECT R.R_NO,
+R.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND R.OM_CNTNUM=O.OM_CNTNUM
+AND M.M_ID='qweqwe'
+AND O.OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+ORDER BY R.R_GROUP DESC;
+
+
+---reviewboard 수정필요
+SELECT R.*
+FROM (SELECT
+R.R_NO,
+O.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_STEP,R.R_INDENT,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE R.M_ID=M.M_ID
+AND R.P_NO=P.P_NO
+AND R.M_ID=O.M_ID
+AND P_NAME='W''S NUPTSE HYBRID DOWN BALL JACKET'
+AND R.R_CONTENT like '%%'
+AND OM_STATE='결제완료'
+AND O.OM_CANCLE='N'
+ORDER BY
+    R_GROUP DESC
+) R;
+
+delete from review;
+commit;
+
+select * from review;
+select * from order_member where m_id='qweqwe';
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='qweqwe'
+       and o.om_cntnum=1038 
+AND O.OM_STATE='구매확정'
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.OM_CNTNUM DESC;
+        
+       
+select * from review;
+select * from order_member where m_id='TEMP';
+
+delete from review;
+commit;
+
+
+--차트 위해 review, member, order_member join하기
+select
+r.r_no,
+o.om_cntnum,o.om_num,p.p_no,o.u_cnt,o.m_id,
+o.om_date,o.p_price,o.om_state,
+r.r_content,
+p.p_name,p.p_price,p.p_color,p.p_size,p.p_filesrc,
+m.m_cash
+from order_member o
+left join review r
+on r.om_cntnum=o.om_cntnum
+left join product p
+on p.p_no=o.p_no
+left join member m
+on o.m_id= m.m_id
+and o.om_state='구매확정'
+and o.om_cancle='N'
+and r.r_content is not null
+order by r.r_no desc;
+
+select r.r_no,
+r.om_cntnum,o.p_no,o.om_state,
+m.m_id,r.r_title,r.r_content,r.r_date,r.r_score,
+p.p_name,p.p_color,p.p_size,p.p_filesrc
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+order by r.r_group desc;
+
+
+--후기가 많이 달린 상품
+--상품명, r_content의 count
+
+select r.r_no,
+o.p_no,
+r.r_content,r.r_date,r.r_score,
+p.p_name
+from review r, product p, order_member o
+where r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null;
+
+select r.r_content,
+p.p_name, count(*)
+from review r, product p, order_member o
+where r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name, r.r_content;
+--order by r.r_group desc;
+
+
+--1.상품명에 대한 후기글 수
+select
+p.p_name, count(*) cnt
+from review r, product p, order_member o
+where r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name
+order by cnt desc;
+
+--2.해당 제품을 많이 구매한 성별
+select 
+p.p_name,m.m_gender,count(*) cnt
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name,m.m_gender
+order by p.p_name asc, m.m_gender asc, cnt desc;
+
+
+--====================================================================
+--다시하기
+--3.해당 제품을 구매한 나이대
+select * from review;
+
+select 
+p.p_name,m.m_age, count(*) cnt
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name,m.m_age
+order by p.p_name asc;
+
+--10대 teenager
+select count(nvl2(max(m_age),max(m_age),0)) teenager
+from member
+where m_age between 10 and 20
+group by m_age;
+
+--20대 twenties
+select count(nvl2(max(m_age),max(m_age),0)) twenties
+from member
+where m_age between 20 and 30
+group by m_age;
+
+--30대 thirties --40도 포함됨
+select count(nvl2(max(m_age),max(m_age),0)) thirties
+from member
+where m_age between 30 and 40
+group by m_age;
+
+--40대 forties
+select count(nvl2(max(m_age),max(m_age),0)) forties
+from member
+where m_age between 40 and 50
+group by m_age;
+
+--fifties
+select count(nvl2(max(m_age),max(m_age),0)) fifties
+from member
+where m_age between 50 and 60
+group by m_age;
+
+--sixties
+select count(nvl2(max(m_age),max(m_age),0)) sixties
+from member
+where m_age between 60 and 70
+group by m_age;
+
+--seventy
+select count(nvl2(max(m_age),max(m_age),0)) seventy
+from member
+where m_age between 70 and 80
+group by m_age;
+
+
+SELECT m_age, COUNT(*) cnt
+  FROM (SELECT CASE WHEN               m_age < 20 THEN '20세미만'
+                    WHEN m_age >= 20 AND m_age < 30 THEN '20세이상 ~ 30세미만'
+                    WHEN m_age >= 30 AND m_age < 40 THEN '30세이상 ~ 40세미만'
+                    WHEN m_age >= 40 AND m_age < 50 THEN '40세이상 ~ 50세미만'
+                    WHEN m_age >= 50 AND m_age < 60 THEN '50세이상 ~ 60세미만'
+                    WHEN m_age >= 50 AND m_age < 60 THEN '60세이상 ~ 70세미만'
+                    WHEN m_age >= 70              THEN '70세이상'
+                END m_age
+          FROM member
+        )
+ GROUP BY m_age
+ ORDER BY m_age;
+ --====================================================================
+ 
+ --4. 평균 별점이 높은 상품
+ select 
+p.p_name,r.r_score
+, count(*) cnt
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name,r.r_score
+order by p.p_name desc; --쿠팡 후기같다
+
+--m_id, r_score, p_name
+select r.r_no,m.m_id,r.r_score,
+p.p_name
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null;
+
+--평균별점, 제품명 순 정렬
+select 
+p.p_name,round(avg(r.r_score),1) avgscore
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name
+order by avgscore desc, p.p_name desc;
+
+select * from review;
+
+delete from review;
+commit;
+
+INSERT INTO REVIEW VALUES(REVIEW_SEQ.NEXTVAL,'jointest',
+'확인','내용','','','','n',SYSDATE,
+REVIEW_SEQ.CURRVAL,0,0,'',5,'N104',1079);
+
+
+select * from review;
+
+
+
+select * from review;
+delete from review;
+commit;
+
+--
+--2023-02-27
+
+SELECT
+P.P_NAME,p.p_price,ROUND(AVG(R.R_SCORE),1) AS AVGSCORE
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE M.M_ID=R.M_ID 
+AND R.P_NO=P.P_NO
+AND R.OM_CNTNUM=O.OM_CNTNUM
+AND O.OM_STATE='구매확정'
+AND R.R_CONTENT IS NOT NULL
+GROUP BY P.P_NAME,p.p_price
+ORDER BY AVGSCORE DESC, P.P_NAME DESC;
+
+INSERT INTO REVIEW VALUES(REVIEW_SEQ.NEXTVAL,'qweqwe',
+'gd','gd','','','','n',SYSDATE,
+REVIEW_SEQ.CURRVAL,0,0,5,'','M1013',1085);
+commit;
+
+update order_member set om_state='결제완료' where m_id='qweqwe';
+select * from review;
+
+
+
+--별점순 top 5/ 메인에서 사용
+select rownum,r.* from
+(
+select p.p_name,p.p_price,round(avg(r.r_score),1) avgscore
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name,p.p_price
+order by avgscore desc, p.p_name desc
+)r
+where rownum between 1 and 5;
+
+
+--제품별 평균별점/ 차트에서 사용
+select rownum,r.* from
+(
+select p.p_name p_name,round(avg(r.r_score),1) avgscore
+from member m, review r, product p, order_member o
+where m.m_id=r.m_id
+and r.p_no=p.p_no
+and r.om_cntnum=o.om_cntnum
+and o.om_state='구매확정'
+and r.r_content is not null
+group by p.p_name
+order by avgscore desc, p.p_name desc
+)r
+where rownum between 1 and 10;
+
+
+--성별 구매 top 5
+select p.p_name,m.m_gender
+from member m, order_member o, product p
+where m.m_id=o.m_id
+and o.p_no=p.p_no
+and o.om_state='구매확정';
+
+--남
+select rownum, m.* from
+(
+select p.p_name,sum(o.u_cnt) as cntsum,m.m_gender
+from member m, order_member o, product p
+where m.m_id=o.m_id
+and o.p_no=p.p_no
+and o.om_state='구매확정'
+and m.m_gender='male'
+group by p.p_name, m.m_gender
+order by cntsum desc
+)m
+where rownum between 1 and 5
+;
+
+--여
+select rownum, f.* from
+(
+select p.p_name,sum(o.u_cnt) as cntsum,m.m_gender
+from member m, order_member o, product p
+where m.m_id=o.m_id
+and o.p_no=p.p_no
+and o.om_state='구매확정'
+and m.m_gender='female'
+group by p.p_name, m.m_gender
+order by cntsum desc
+)f
+where rownum between 1 and 5
+;
+
+
+select * from order_member where p_no='M1006';
+
+
+
+--==
+--20230228
+--나이대별 구매
+
+SELECT m_age, COUNT(*) cnt
+  FROM (SELECT CASE WHEN               m_age < 20 THEN '20세미만'
+                    WHEN m_age >= 20 AND m_age < 30 THEN '20세이상 ~ 30세미만'
+                    WHEN m_age >= 30 AND m_age < 40 THEN '30세이상 ~ 40세미만'
+                    WHEN m_age >= 40 AND m_age < 50 THEN '40세이상 ~ 50세미만'
+                    WHEN m_age >= 50 AND m_age < 60 THEN '50세이상 ~ 60세미만'
+                    WHEN m_age >= 50 AND m_age < 60 THEN '60세이상 ~ 70세미만'
+                    WHEN m_age >= 70              THEN '70세이상'
+                END m_age
+          FROM member
+        )
+ GROUP BY m_age
+ ORDER BY m_age;
+ 
+ 
+-- 여성 구매 TOP5
+SELECT ROWNUM, M.* FROM
+(
+SELECT P.P_NAME,P.P_NO,P.P_COLOR,P.P_PRICE,P.P_FILESRC,SUM(O.U_CNT) AS CNTSUM,M.M_GENDER
+FROM MEMBER M, ORDER_MEMBER O, PRODUCT P
+WHERE M.M_ID=O.M_ID
+AND O.P_NO=P.P_NO
+AND O.OM_STATE='구매확정'
+AND M.M_GENDER='female'
+GROUP BY P.P_NAME,P.P_NO,P.P_COLOR,P.P_PRICE,P.P_FILESRC,M.M_GENDER
+ORDER BY CNTSUM DESC
+)M
+WHERE ROWNUM BETWEEN 1 AND 5;
+
+
+
+--나이대 구매
+
+SELECT ROWNUM, M.* FROM
+(
+SELECT P.P_NAME,P.P_NO,P.P_COLOR,P.P_PRICE,P.P_FILESRC,SUM(O.U_CNT) AS CNTSUM
+FROM MEMBER M, ORDER_MEMBER O, PRODUCT P
+WHERE M.M_ID=O.M_ID
+AND O.P_NO=P.P_NO
+AND O.OM_STATE='구매확정'
+GROUP BY P.P_NAME,P.P_NO,P.P_COLOR,P.P_PRICE,P.P_FILESRC,M.M_AGE
+ORDER BY CNTSUM DESC
+)M
+WHERE ROWNUM BETWEEN 1 AND 5;
+
+
+select m_id, m_age, (select m_age from member
+where m.m_age between 10 and 20) as teenager
+from member m;
+
+
+delete from review;
+commit;
+
+drop sequence review_seq;
+
+CREATE SEQUENCE review_seq INCREMENT BY 1 
+START WITH 1000;
+
+delete from cart;
+commit;
+
+
+--==
+--20230302
+--수정에 상품 올리기
+
+select * from review;
+
+SELECT r.R_NO,r.M_ID,r.R_TITLE,r.R_CONTENT,r.R_ID,r.R_RETITLE,
+r.R_RECONTENT,r.R_YNN,r.R_DATE,r.R_GROUP,r.R_FILESRC,r.R_SCORE,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC,
+o.om_cntnum
+from product p, review r, order_member o
+where p.p_no=r.p_no
+and r.om_cntnum=o.om_cntnum
+and r.R_NO=1004
+ORDER BY R_GROUP DESC;
+
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID=#{param1}
+AND O.OM_STATE='구매확정'
+AND O.OM_CNTNUM=#{param2}
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.OM_CNTNUM DESC;
+
+
+commit;
+
+select * from review;
+        
+        
+SELECT NVL(ROUND(AVG(R.R_SCORE),1),0)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P.P_NAME='RETRO LOGO EX S/S R/TEE';
+
+SELECT COUNT(*)
+FROM MEMBER M, REVIEW R, PRODUCT P
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND P_NAME='RETRO LOGO EX S/S R/TEE';
+
+select m_id,r_title,r_id,r_retitle,r_recontent,r_ynn from review order by r_ynn desc;
+
+update order_member set om_state='결제완료' where m_id='qweqwe';
+commit;
+
+
+SELECT O.OM_CNTNUM,O.OM_NUM,P.P_NO,O.U_CNT,O.M_ID,
+O.OM_DATE,O.P_PRICE,O.OM_STATE,
+R.R_CONTENT,
+P.P_NAME,P.P_PRICE,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM ORDER_MEMBER O
+LEFT JOIN REVIEW R
+ON R.OM_CNTNUM=O.OM_CNTNUM
+LEFT JOIN PRODUCT P
+ON P.P_NO=O.P_NO
+WHERE O.M_ID='qweqwe'
+AND O.OM_STATE='구매확정'
+AND O.OM_CNTNUM=1073
+AND O.OM_CANCLE='N'
+AND R.R_CONTENT IS NULL
+ORDER BY O.OM_CNTNUM DESC;
+
+
+SELECT R.R_NO,
+R.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND R.OM_CNTNUM=O.OM_CNTNUM
+AND M.M_ID='qweqwe'
+AND O.OM_STATE='구매확정'
+AND O.OM_CANCLE='N'
+ORDER BY R.R_GROUP DESC;
+
+SELECT R.R_NO,
+O.OM_CNTNUM,O.P_NO,O.OM_STATE,O.OM_CANCLE,
+M.M_ID,R.R_TITLE,R.R_CONTENT,R.R_ID,R.R_RETITLE,
+R.R_RECONTENT,R.R_YNN,R.R_DATE,R.R_GROUP,R.R_FILESRC,R.R_SCORE,
+P.P_NAME,P.P_COLOR,P.P_SIZE,P.P_FILESRC
+FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
+WHERE M.M_ID=R.M_ID
+AND R.P_NO=P.P_NO
+AND R.OM_CNTNUM=O.OM_CNTNUM
+AND M.M_ID='qweqwe'
+AND O.OM_STATE='구매확정'
+AND O.OM_CANCLE='N'
+ORDER BY R.R_GROUP DESC;
+-----------------------------김현정--------------------------------------------------------------------------------------------------------
+--1.AOrderListService(관리자 list창)
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,om_delcancle from order_member;
+
+--2. AOrderListService(page)
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,om_delcancle from (select rownum num, n.* from
+(select * from order_member order by om_cntnum asc) n)
+where num between 1 and 10 ;
+
+--AOrderListService : selectAdminTotCount()
+select count(*) from order_member;
+
+
+--AContentUpdateService(Detail창)
+select om_cntnum,om_num,p_no,
+create table order_member(
+om_cntnum varchar2(100), --상품주문번호(seq)  primary
+om_num varchar2(100), --주문번호(sysdate+id)
+p_no varchar2(100), --상품번호(이니셜+seq)
+u_cnt number, --주문수량
+m_id varchar2(100), --id
+om_date date, --주문일자
+om_pay varchar2(100), --결제형태 : 카드결제 계좌이체 포인트
+p_price number, --총액
+om_state varchar2(100), --처리상태 :결제완료,취소요청,취소완료,상품준비중,배송완료,구매확정
+om_cancle varchar2(10), --★주문취소여부(N,Y)
+om_cdate date,--주문취소일자
+c_reason VARCHAR2(1000),--주문취소사유
+om_delcancle varchar2(30));--반품요청여부(N,Y)
+
+
+--select option 변경 시 update
+--주문취소 : ACancleModifyService
+update order_member set om_state='주문취소' where om_cntnum='1018';--order_member
+--주문확정 : AOrderConfirmModifyService
+update order_member set om_state='주문확정' where om_cntnum='1009';
+--배송완료 : ADelCompleteModifyService 
+update order_member set om_state='배송완료' where om_cntnum='1009';
+--반품완료 : ARefundCompleteModifyService
+update order_member set om_state='반품완료' where om_cntnum='1016';
+--구매확정 : ABuyConfirmModifyService
+update order_member set om_state='구매확정' where om_cntnum='1009';
+commit;
+
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,c_reason,om_delcancle 
+from order_member where om_cntnum='1018';
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,c_reason,om_delcancle 
+from order_member where om_cntnum='1009';
+
+--Admin.xml 현재 sql문
+--취소요청여부가 Y 일 때
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,om_delcancle from order_member
+where om_cancle like '%Y%' 
+and om_cdate between '2023-02-01'and '2023-03-31';
+
+--취소요청여부가 N 일 때                                                                                                 
+select om_cntnum,om_num,p_no,
+u_cnt,m_id,om_date,om_pay,p_price,
+om_state,om_cancle,om_cdate,om_delcancle  from order_member
+where om_cancle like '%N%' 
+and om_cdate between '2023-02-01'and '2023-03-31'                                                 
+or om_cdate is null;
+
+
+
+-- ASendMessageService : sms
+select * from member where m_id='jointest';
+select m_id,m_tel from member where m_id='jointest';
+--sub
+select m_id,m_tel from member where m_id=(select m_id from order_member where om_cntnum=1018);
+select m_id from order_member where om_cntnum=1018;
+commit;
+select * from order_member;
+
+
+-------------------------------------------------석진홍--------------------------------------------------------------------------------------------------------
+select * from Cart;
+select * from product;
+
+create table Cart(
+c_no number,
+m_id varchar2(20),
+p_no varchar2(20),
+c_cnt number);
+
+--alter table product add(p_date date default sysdate);
+--alter table product add(p_category varchar2(20));
+select * from cart;
+delete cart where p_no is null;
+commit;
+--장바구니
+--장바구니추가
+create sequence cart_seq;
+drop sequence cart_seq;
+insert into Cart values(cart_seq.nextval,'asdasd111','N101','3');
+--아이디가 jointest인 사람의 장바구니 리스트
+SELECT
+    P.P_NO, P.P_NAME, P.P_PRICE, P.P_CNT, P.P_COLOR, P.P_SIZE, P.P_FILESRC, C.C_CNT, C.M_ID, C.C_NO
+FROM
+    CART C
+LEFT JOIN
+    PRODUCT P
+ON
+    C.P_NO = P.P_NO
+WHERE
+    C.M_ID='jointest'
+ORDER BY
+    C.C_NO ASC ;  
+--장바구니 삭제
+delete Cart where c_no='66';
+--장바구니 수량증가
+update
+cart c
+set c.c_cnt=c.c_cnt+1
+where c.c_no='70' and (select p_cnt from product where p_no='N101')> c.c_cnt;
+--장바구니 수량감소
+update
+cart c
+set c.c_cnt=c.c_cnt-1
+where c.c_no='70' and c.c_cnt > 1 ;
+--장바구니번호가 96번인 상품의 옵션변경 view 
+SELECT
+    P.P_NO, P.P_NAME, P.P_PRICE, P.P_CNT, P.P_COLOR, P.P_SIZE, P.P_FILESRC, C.C_CNT, C.M_ID, C.C_NO,P.P_CATEGORY
+FROM
+    CART C
+LEFT JOIN
+    PRODUCT P
+ON
+    C.P_NO = P.P_NO
+WHERE
+    c.c_no='96';
+--장바구니 옵션변경 
+update 
+    cart 
+set 
+    p_no=(select p.p_no from product p where p.p_color='BLACK' and p.p_size='090S'),c_cnt='2' 
+where 
+    c_no='67';
+--cartoption 중복검사 1이면 중복
+SELECT
+    count(*)
+FROM
+    CART C
+LEFT JOIN
+    PRODUCT P
+ON
+    C.P_NO = P.P_NO
+WHERE
+    C.M_ID='jointest' and p.p_size='085XS' and p.p_color='IVORY' 
+    and p.p_category='women_outer_padding' and c.c_no not in (96) and p.p_name='W''S NUPTSE HYBRID DOWN BALL JACKET';    
+--장바구니 버튼 사이즈구별
+SELECT * FROM PRODUCT WHERE P_NAME=(SELECT P_NAME FROM PRODUCT WHERE P_NO='M1119') and p_color=(SELECT p_color FROM PRODUCT WHERE P_NO='M1119');
+--장바구니 수량
+--내가 고른 상품의 수량
+select p_cnt from product where p_name='RETRO LOGO EX S/S R/TEE' and p_color='BLACK' and p_size='090S';
+--장바구니 상품 구매시 장바구니에있는 상품 삭제
+delete cart where p_no='M1122' and m_id='jointest';
+--상품관리    
+--상품 리스트 출력
+SELECT 
+    *
+FROM
+    (SELECT ROWNUM NUM, p.* FROM product p WHERE p_name LIKE '%%')
+WHERE 
+    NUM BETWEEN 1 AND 10
+    order by num asc,p_price asc ;    
+--리스트의 레코드 갯수
+select count(*) from product where p_name like '%NOVELTY%';
+--체크된 상품들 삭제
+delete product where p_no='';
+--가격높은순이 선택될때 
+--from에 있는 상품중 1~5에서만 높은순으로 정렬되기 때문에 사용할 수 없음
+SELECT 
+   rownum d,a.*
+FROM
+    (SELECT ROWNUM NUM, p.* FROM product p WHERE p_name LIKE '%%' and p_size like '%%'
+    order by p_price desc
+    ) a
+WHERE 
+    NUM BETWEEN 1 AND 5;
+--수정본
+select 
+    * 
+from 
+    (SELECT rownum num,p.* FROM 
+    (SELECT ROWNUM RNUM, p.* FROM product p WHERE p_name LIKE '%%' and p_size like '%%'
+    order by p_price desc
+    ) p)
+where
+    num BETWEEN 1 and 5;
+--상품 업데이트
+update product set p_name='',p_price='',p_cnt='' 
+where p_no='N101';
+
+select * from cart;
+
+--chart 상품별
+SELECT p.p_name goods,sum(c.c_cnt) totalcnt
+FROM CART C JOIN PRODUCT P
+ON C.P_NO = P.P_NO
+group by p.p_name
+order by p.p_name;
+select * from product where p_no='N103';
+
+select p_name,sum(c.c_cnt) totalcnt from cart c,product p where c.p_no=p.p_no group by p.p_name order by p.p_name;
+--헤더
+--상품목록 검색
+select p_name,p_filesrc,p_price from product where p_name like '%안%' or p_color like '%안%' or p_size like '%안%' or p_category like '%안%' or p_info like '%안%'
+group by p_name,p_filesrc,p_price;
+--선택한 카테고리
+select p_name,p_filesrc,p_price from product where p_category like '%tshirts%'
+group by p_name,p_filesrc,p_price;
+--카테고리 가격 구현 x
+select * from product where p_price <=1000000 and p_price >=500000 
+or p_price <=500000 and p_price >=200000 
+or p_price <=200000 and p_price >=100000 
+or p_price <=100000 and p_price >=0 order by p_price desc;
+
+
+select * from product order by p_no desc;
+create SEQUENCE PNO_SEQ
+start with 1000;
+
+
+commit;
+drop sequence pno_seq;
+delete product;
+select * from product where p_price='24990' order by p_no desc;
+commit;
+
+--========================================================================아우터
+
+--패딩
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ANTARCTIC PARKA',899000,8,'BLACK','090S','NJ2DN75A_NJ2DN75A_hover.jpg',sysdate,'outer_parka','안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극 기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ANTARCTIC PARKA',899000,8,'BLACK','095M','NJ2DN75A_NJ2DN75A_hover.jpg',sysdate,'outer_parka','안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극 기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ANTARCTIC PARKA',899000,8,'BLACK','100L','NJ2DN75A_NJ2DN75A_hover.jpg',sysdate,'outer_parka','안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극 기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'UNDYED ANTARCTIC PARKA',929000,8,'WHITE','090S','NJ2DN76A_NJ2DN76A_hover.jpg',sysdate,'outer_parka','염색 공정을 거치지 않고 원단 자체의 색을 살린 "언다이드" 컬렉션 제품입니다. 미키의 아이코닉 제품인 안타틱 다운 파카로, 겉감에 언다이드 2L 고어텍스 원단을 적용하였습니다. 안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'UNDYED ANTARCTIC PARKA',929000,8,'WHITE','095M','NJ2DN76A_NJ2DN76A_hover.jpg',sysdate,'outer_parka','염색 공정을 거치지 않고 원단 자체의 색을 살린 "언다이드" 컬렉션 제품입니다. 미키의 아이코닉 제품인 안타틱 다운 파카로, 겉감에 언다이드 2L 고어텍스 원단을 적용하였습니다. 안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'UNDYED ANTARCTIC PARKA',929000,8,'WHITE','100L','NJ2DN76A_NJ2DN76A_hover.jpg',sysdate,'outer_parka','염색 공정을 거치지 않고 원단 자체의 색을 살린 "언다이드" 컬렉션 제품입니다. 미키의 아이코닉 제품인 안타틱 다운 파카로, 겉감에 언다이드 2L 고어텍스 원단을 적용하였습니다. 안감으로는 퍼텍스 퀀텀 원단을 사용하였고, 탈부착 가능한 에코 퍼를 사용한 친환경 제품입니다. 남극기지 연구 원정대용 방한 자켓과 같은 극지방의 혹독한 환경에서 착용 가능한 제품입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'RED','085XS','NJ1DN62C_NJ1DN62C_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'RED','090S','NJ1DN62C_NJ1DN62C_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'RED','095M','NJ1DN62C_NJ1DN62C_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'RED','100L','NJ1DN62C_NJ1DN62C_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'DARK_NAVY','090S','NJ1DN62B_NJ1DN62B_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'DARK_NAVY','095M','NJ1DN62B_NJ1DN62B_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M''S BIAFO DOWN PARKA',801000,8,'DARK_NAVY','100L','NJ1DN62B_NJ1DN62B_hover.jpg',sysdate,'outer_parka','SUMMIT SERIES로 800 필파워의 RDS 구스 다운을 사용하여 보온성이 매우 우수합니다. 1KG 이하의 무게로 가벼운 착용감의 헤비 다운 파카로 7개의 수납 포켓이 있으며 내부 카라와 2중 구조의 사이즈 조절 시스템을 적용한 후드가 FIT감과 보온성을 높여주고 외부 한기를 완벽히 차단하도록 설계되었습니다. 밑단의 드로우코드를 조절하여 FIT 연출이 가능합니다. 제품 휴대가 용이하도록 별도로 구성된 패커블백이 포함되어있습니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'LIGHT_GRAY','085XS','NC2DN50C_NC2DN50C_hover.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'LIGHT_GRAY','090S','NC2DN50C_NC2DN50C_hover.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'LIGHT_GRAY','095M','NC2DN50C_NC2DN50C_hover.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'DARK_KHAKI','085XS','NC2DN50B_NC2DN50B_primary.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'DARK_KHAKI','090S','NC2DN50B_NC2DN50B_primary.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'AIR HEAT DOWN COAT',367200,8,'DARK_KHAKI','095M','NC2DN50B_NC2DN50B_primary.jpg',sysdate,'outer_parka','무릎 위 기장의 다운 코트입니다. 비윤리적 동물학대 행위를 하지 않은 RDS GOOSE DOWN을 사용하여 경량성과 보온성을 향상시켰습니다. 등판에는 다운과 함께 광발열 충전재와 인체의 열을 반사시키는 소재를 더한 이중구조로 레이어 안의 공기를 따뜻하게 데워주어 단일 충전재 대비 더 우수한 보온성을 제공합니다. 심플한 핸드 포켓 플랩 디자인에 소매 와펜, 행잉 스타일로 도시에서나 아웃도어 활동시에 스타일리시 하게 착용 가능한 디자인입니다. 후드 탈부착이 가능하여 다양하게 스타일 연출이 가능합니다.');
+--자켓
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ULTRA LIGHT JACKET',133000,8,'BLACK','090S','NJ3LP05A_NJ3LP05A_primary.jpg',sysdate,'outer_jacket','통기성이 우수하면서도 가벼운 PERTEX QUANTUM AIR 소재의 경량 자켓입니다. 산행용 및 트레이닝용으로 간편하게 착용할 수 있으며, 쾌적한 착용감으로 일교차가 큰 여름철에도 입을 수 있습니다. 앞 실버 슬릿 지퍼 포인트가 특징적 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ULTRA LIGHT JACKET',133000,8,'BLACK','095M','NJ3LP05A_NJ3LP05A_primary.jpg',sysdate,'outer_jacket','통기성이 우수하면서도 가벼운 PERTEX QUANTUM AIR 소재의 경량 자켓입니다. 산행용 및 트레이닝용으로 간편하게 착용할 수 있으며, 쾌적한 착용감으로 일교차가 큰 여름철에도 입을 수 있습니다. 앞 실버 슬릿 지퍼 포인트가 특징적 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ULTRA LIGHT JACKET',133000,8,'BLACK','100L','NJ3LP05A_NJ3LP05A_primary.jpg',sysdate,'outer_jacket','통기성이 우수하면서도 가벼운 PERTEX QUANTUM AIR 소재의 경량 자켓입니다. 산행용 및 트레이닝용으로 간편하게 착용할 수 있으며, 쾌적한 착용감으로 일교차가 큰 여름철에도 입을 수 있습니다. 앞 실버 슬릿 지퍼 포인트가 특징적 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ULTRA LIGHT JACKET',133000,8,'LIME','085XS','NJ3LP05C_NJ3LP05C_primary.jpg',sysdate,'outer_jacket','통기성이 우수하면서도 가벼운 PERTEX QUANTUM AIR 소재의 경량 자켓입니다. 산행용 및 트레이닝용으로 간편하게 착용할 수 있으며, 쾌적한 착용감으로 일교차가 큰 여름철에도 입을 수 있습니다. 앞 실버 슬릿 지퍼 포인트가 특징적 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ULTRA LIGHT JACKET',133000,8,'LIME','095M','NJ3LP05C_NJ3LP05C_primary.jpg',sysdate,'outer_jacket','통기성이 우수하면서도 가벼운 PERTEX QUANTUM AIR 소재의 경량 자켓입니다. 산행용 및 트레이닝용으로 간편하게 착용할 수 있으며, 쾌적한 착용감으로 일교차가 큰 여름철에도 입을 수 있습니다. 앞 실버 슬릿 지퍼 포인트가 특징적 입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'EXPLORING WIND JACKET',134100 ,8,'LIME','090S','NJ3BP10F_NJ3BP10F_hover.jpg',sysdate,'outer_jacket','야외 활동이나 여행에서의 기후에 대응할 수 있는 발수 가공이된 우븐 재킷입니다. 안감이 없는 가벼운 구조로 아웃도어 뿐만이 아니라 일상의 다양한 씬으로 폭넓게 활용 가능합니다. 여유있는 실루엣으로, 레이어드가 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'EXPLORING WIND JACKET',134100 ,8,'LIME','095M','NJ3BP10F_NJ3BP10F_hover.jpg',sysdate,'outer_jacket','야외 활동이나 여행에서의 기후에 대응할 수 있는 발수 가공이된 우븐 재킷입니다. 안감이 없는 가벼운 구조로 아웃도어 뿐만이 아니라 일상의 다양한 씬으로 폭넓게 활용 가능합니다. 여유있는 실루엣으로, 레이어드가 가능합니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'EXPLORING WIND JACKET',134100 ,8,'LIME','100L','NJ3BP10F_NJ3BP10F_hover.jpg',sysdate,'outer_jacket','야외 활동이나 여행에서의 기후에 대응할 수 있는 발수 가공이된 우븐 재킷입니다. 안감이 없는 가벼운 구조로 아웃도어 뿐만이 아니라 일상의 다양한 씬으로 폭넓게 활용 가능합니다. 여유있는 실루엣으로, 레이어드가 가능합니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BLACK','090S','NJ3BP07J_NJ3BP07J_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BLACK','095M','NJ3BP07J_NJ3BP07J_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BLACK','100L','NJ3BP07J_NJ3BP07J_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BEIGE','090S','NJ3BP07K_NJ3BP07K_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BEIGE','095M','NJ3BP07K_NJ3BP07K_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NEILTON JACKET',198000 ,8,'BEIGE','100L','NJ3BP07K_NJ3BP07K_hover.jpg',sysdate,'outer_jacket','탄탄한 우븐 소재의 자켓입니다. 트렌드에 맞는 기존 화이트라벨 자켓보다 루즈한 핏으로, 간절기부터 착용하기 좋은 두께입니다.');
+--====================================================================팬츠&모자
+
+--트레이닝 조거팬츠
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'BEIGE','070XS','NP6NN54B_NP6NN54B.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'BEIGE','075S','NP6NN54B_NP6NN54B.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'BEIGE','080M','NP6NN54B_NP6NN54B.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'BEIGE','085L','NP6NN54B_NP6NN54B.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'DARK_KHAKI','070XS','NP6NN54C_NP6NN54C.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'DARK_KHAKI','075S','NP6NN54C_NP6NN54C.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'DARK_KHAKI','080M','NP6NN54C_NP6NN54C.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DENALI WIND PANTS',109000,8,'DARK_KHAKI','085L','NP6NN54C_NP6NN54C.jpg',sysdate,'pants_training','무릎 절개와 백 포켓으로 실용성과 디자인성을 더한 조거타입 트레이닝 팬츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NOVELTY MARTIS PANTS',178000,8,'BLACK','070XS','NP6NP06J_NP6NP06J.jpg',sysdate,'pants_training','내구성이 뛰어난 코듀라 소재를 사용하여 업그레이드한 조거형 트레이닝 롱 팬츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NOVELTY MARTIS PANTS',178000,8,'BLACK','075S','NP6NP06J_NP6NP06J.jpg',sysdate,'pants_training','내구성이 뛰어난 코듀라 소재를 사용하여 업그레이드한 조거형 트레이닝 롱 팬츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NOVELTY MARTIS PANTS',178000,8,'BLACK','080M','NP6NP06J_NP6NP06J.jpg',sysdate,'pants_training','내구성이 뛰어난 코듀라 소재를 사용하여 업그레이드한 조거형 트레이닝 롱 팬츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'NOVELTY MARTIS PANTS',178000,8,'BLACK','085L','NP6NP06J_NP6NP06J.jpg',sysdate,'pants_training','내구성이 뛰어난 코듀라 소재를 사용하여 업그레이드한 조거형 트레이닝 롱 팬츠 제품입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'ICE_GRAY','070XS','NP6NP02K.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'ICE_GRAY','075S','NP6NP02K.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'ICE_GRAY','080M','NP6NP02K.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'ICE_GRAY','085L','NP6NP02K.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'LIGHT_BEIGE','070XS','NP6NP02L.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'LIGHT_BEIGE','075S','NP6NP02L.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'LIGHT_BEIGE','080M','NP6NP02L.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'LIGHT_BEIGE','085L','NP6NP02L.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'BLACK','070XS','NP6NP02J.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'BLACK','075S','NP6NP02J.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'BLACK','080M','NP6NP02J.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ICE RUN PANTS',118000,8,'BLACK','085L','NP6NP02J.jpg',sysdate,'pants_training','기능성 냉감 소재의 조거형 트레이닝팬츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'DARK_BEIGE','070XS','NP6NP04K_NP6NP04K_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'DARK_BEIGE','075S','NP6NP04K_NP6NP04K_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'DARK_BEIGE','080M','NP6NP04K_NP6NP04K_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'DARK_BEIGE','085L','NP6NP04K_NP6NP04K_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'BLACK','070XS','NP6NP04J_NP6NP04J_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'BLACK','075S','NP6NP04J_NP6NP04J_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'BLACK','080M','NP6NP04J_NP6NP04J_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'VILAN COTTON JOGGER PANTS',138000,8,'BLACK','085L','NP6NP04J_NP6NP04J_primary.jpg',sysdate,'pants_training','코튼 트윌 소재를 사용한 트레이닝 조거 팬츠로 카고 포켓 디테일을 사용하여 캐주얼하게 디자인했습니다. ');
+--모자 캡--
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'LIGHT_GRAY','(S)','NE3CP01C_NE3CP01C_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'LIGHT_GRAY','(M)','NE3CP01C_NE3CP01C_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'GRAYISH_BEIGE','(S)','NE3CP01D_NE3CP01D_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'GRAYISH_BEIGE','(M)','NE3CP01D_NE3CP01D_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'WHITE','(S)','NE3CP01L_NE3CP01L_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'ECO BALL CAP',39000,8,'WHITE','(M)','NE3CP01L_NE3CP01L_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 소프트 볼캡입니다. ');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TNF COTTON BALL CAP',39000,8,'ROYAL_BLUE','ONE','NE3CP00C_NE3CP00C_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 볼캡입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TNF COTTON BALL CAP',39000,8,'ORANGE','ONE','NE3CP00D_NE3CP00D_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 볼캡입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TNF COTTON BALL CAP',39000,8,'WHITE','ONE','NE3CP00B_NE3CP00B_primary.jpg',sysdate,'hat_cap','노스페이스 메인로고 자수 포인트의 기본 볼캡입니다.');
+--====================================================================마스크&양말&가방
+
+--마스크
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TEAMKOREA REPLICA MASK',12600,80,'WHITE','M','NA5AM18A_NA5AM18A.jpg',sysdate,'other_mask','필터 없이 사용하는 마스크로서 운동 또는 평상시에 편리하게 사용 가능한 마스크입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TEAMKOREA REPLICA MASK',12600,80,'WHITE','L','NA5AM18A_NA5AM18A.jpg',sysdate,'other_mask','필터 없이 사용하는 마스크로서 운동 또는 평상시에 편리하게 사용 가능한 마스크입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'Polo 필터 마스크',34300,50,'BLACK','S','MAPOHDW07620008.jpg',sysdate,'other_mask','Polo Ralph Lauren의 세척 및 재사용 가능한 페이스 마스크로, 코와 입을 가려줍니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'Polo 필터 마스크',34300,50,'BLACK','M','MAPOHDW07620008.jpg',sysdate,'other_mask','Polo Ralph Lauren의 세척 및 재사용 가능한 페이스 마스크로, 코와 입을 가려줍니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'Polo 필터 마스크',34300,50,'BLACK','L','MAPOHDW07620008.jpg',sysdate,'other_mask','Polo Ralph Lauren의 세척 및 재사용 가능한 페이스 마스크로, 코와 입을 가려줍니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'로고 3D마스크[에어로실버원단] 블랙(3매)',9900,50,'BLACK','L','BYMOSS1511078.jpg',sysdate,'other_mask','트렌디한 디자인과 기능성원단(효성 에어로실버)을 사용한 마스크 제품입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'프로쉴드 마스크',17000,50,'MELANGE GREY','L','NA5AM60B.jpg',sysdate,'other_mask','3D 입체 곡선으로 제작되어 밀착감이 뛰어나며, 스트레치 원단을 사용하여 착용감이 편안합니다.');
+--양말
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'BLACK','240MM','NY4MP01E_NY4MP01E.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'BLACK','260MM','NY4MP01E_NY4MP01E.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'WHITE','240MM','NY4MP01F_NY4MP01F.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'WHITE','260MM','NY4MP01F_NY4MP01F.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'LILAC','240MM','NY4MP01G_NY4MP01G.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COOLMAX MID SOCKS',13500,80,'LILAC','260MM','NY4MP01F_NY4MP01F.jpg',sysdate,'other_socks','흡속속건 기능의 COOLMAX 소재를 사용한 미드기장 양말입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'코트 중목양말',5000,80,'VANILLA','240','FS3SCF5333X_VAA.jpg',sysdate,'other_socks','종아리의 1/4까지 올라오는 길이의 미드크루삭스입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'코트 중목양말',5000,80,'VANILLA','260','FS3SCF5333X_VAA.jpg',sysdate,'other_socks','종아리의 1/4까지 올라오는 길이의 미드크루삭스입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'코트 중목양말',5000,80,'PALE LAVENDER','240','FS3SCF5333X_PLV.jpg',sysdate,'other_socks','종아리의 1/4까지 올라오는 길이의 미드크루삭스입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'코트 중목양말',5000,80,'OFF WHITE','240','FS3SCF5333X_OWH.jpg',sysdate,'other_socks','종아리의 1/4까지 올라오는 길이의 미드크루삭스입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'코트 중목양말',5000,80,'OFF WHITE','260','FS3SCF5333X_OWH.jpg',sysdate,'other_socks','종아리의 1/4까지 올라오는 길이의 미드크루삭스입니다.');
+--가방
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DUAL PRO III BACKPACK',135200,80,'CREAM','ONE','NM2DP02K_NM2DP02K.jpg',sysdate,'backpack_casual','30L급의 스탠다드한 쉐입으로 안정된 구조감을 제안하는 LIGHT한 등판 몰드를 적용된 신학기 가방입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DUAL PRO III BACKPACK',135200,80,'BLACK','ONE','NM2DP02J_NM2DP02J.jpg',sysdate,'backpack_casual','30L급의 스탠다드한 쉐입으로 안정된 구조감을 제안하는 LIGHT한 등판 몰드를 적용된 신학기 가방입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DUAL PRO III BACKPACK',135200,80,'BEIGE','ONE','NM2DP02L_NM2DP02L.jpg',sysdate,'backpack_casual','30L급의 스탠다드한 쉐입으로 안정된 구조감을 제안하는 LIGHT한 등판 몰드를 적용된 신학기 가방입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'DUAL PRO III BACKPACK',135200,80,'DARK_GRAY','ONE','NM2DP02M_NM2DP02M.jpg',sysdate,'backpack_casual','30L급의 스탠다드한 쉐입으로 안정된 구조감을 제안하는 LIGHT한 등판 몰드를 적용된 신학기 가방입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'WANNABE EXT PACK',127200,80,'LIGHT_GRAY','ONE','NM2DP03L_NM2DP03L.jpg',sysdate,'backpack_casual','익스텐션 기능이 있어 사용하는 용도에 따라 29L까지 용량을 늘려 사용할 수 있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'WANNABE EXT PACK',127200,80,'LIGHT_PINK','ONE','NM2DP03M_NM2DP03M.jpg',sysdate,'backpack_casual','익스텐션 기능이 있어 사용하는 용도에 따라 29L까지 용량을 늘려 사용할 수 있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'WANNABE EXT PACK',127200,80,'CREAM','ONE','NM2DP03K_NM2DP03K.jpg',sysdate,'backpack_casual','익스텐션 기능이 있어 사용하는 용도에 따라 29L까지 용량을 늘려 사용할 수 있습니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'WANNABE EXT PACK',127200,80,'BLACK','ONE','NM2DP03J_NM2DP03J.jpg',sysdate,'backpack_casual','익스텐션 기능이 있어 사용하는 용도에 따라 29L까지 용량을 늘려 사용할 수 있습니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'HOT SHOTK',139500,80,'CLOUD','ONE','NM2DP01C_NM2DP01C.jpg',sysdate,'backpack_climbing','오리지널 HOT SHOT 모델, 8리터로 수납에 충실한 DAYPACK입니다.일상 생활, 여행 및 간단한 하이킹에도 사용 할 수 있는 가방입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'HOT SHOTK',139500,80,'BLACK','ONE','NM2DP01A_NM2DP01A.jpg',sysdate,'backpack_climbing','오리지널 HOT SHOT 모델, 8리터로 수납에 충실한 DAYPACK입니다.일상 생활, 여행 및 간단한 하이킹에도 사용 할 수 있는 가방입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'HOT SHOTK',139500,80,'COOL_GRAY','ONE','NM2DP01B_NM2DP01B.jpg',sysdate,'backpack_climbing','오리지널 HOT SHOT 모델, 8리터로 수납에 충실한 DAYPACK입니다.일상 생활, 여행 및 간단한 하이킹에도 사용 할 수 있는 가방입니다.');
+--===============================================================티&셔츠
+
+--티&셔츠
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'LIGHT_BEIGE','085XS','NM5PP42C_NM5PP42C_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'LIGHT_BEIGE','090S','NM5PP42C_NM5PP42C_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'LIGHT_BEIGE','095M','NM5PP42C_NM5PP42C_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'BLACK','085XS','NM5PP42A_NM5PP42A_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'BLACK','090S','NM5PP42A_NM5PP42A_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'BLACK','095M','NM5PP42A_NM5PP42A_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'BLACK','100L','NM5PP42A_NM5PP42A_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'STONE_GRAY','085XS','NM5PP42B_NM5PP42B_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'STONE_GRAY','090S','NM5PP42B_NM5PP42B_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON NSE BOX LOGO HOODIE',89100,50,'STONE_GRAY','095M','NM5PP42B_NM5PP42B_primary.jpg',sysdate,'tshirts_hood','눕시 박스 그래픽으로 포인트를 주고 부드러운 코튼 소재를 사용한 유니스타일 후디입니다.');
+
+--라운드티
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'WHITE','090S','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'WHITE','095M','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'WHITE','100L','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'LIGHT_BEIGE','085XS','NT7UP00K_NT7UP00K_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'LIGHT_BEIGE','090S','NT7UP00K_NT7UP00K_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'COTTON S/S R/TEE',28000,50,'LIGHT_BEIGE','095M','NT7UP00K_NT7UP00K_primary.jpg',sysdate,'tshirts_crewneck','코튼 소재에 스트레치성이 가미되어 내추럴하면서, 편안하게 착용 가능한 라운드 티셔츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'BLACK','090S','NT7UN17J_NT7UN17J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'BLACK','095M','NT7UN17J_NT7UN17J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'BLACK','100L','NT7UN17J_NT7UN17J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'WHITE','085XS','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'WHITE','090S','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'RETRO LOGO EX S/S R/TEE',24990,50,'WHITE','095M','NT7UP00J_NT7UP00J_primary.jpg',sysdate,'tshirts_crewneck','코튼 폴리 원단을 사용한 라운드넥 반팔 티셔츠 제품입니다.');
+
+--셔츠
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TRAVELER SHIRTS',116100,50,'LIGHT_BLUE','090S','NH8LP01B_NH8LP01B_primary.jpg',sysdate,'tshirts_shirts','코튼 나일론 혼방의 옥스퍼드 소재로, 루즈핏의 기본형 셔츠 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TRAVELER SHIRTS',116100,50,'LIGHT_BLUE','095M','NH8LP01B_NH8LP01B_primary.jpg',sysdate,'tshirts_shirts','코튼 나일론 혼방의 옥스퍼드 소재로, 루즈핏의 기본형 셔츠 입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'TRAVELER SHIRTS',116100,50,'LIGHT_BLUE','100L','NH8LP01B_NH8LP01B_primary.jpg',sysdate,'tshirts_shirts','코튼 나일론 혼방의 옥스퍼드 소재로, 루즈핏의 기본형 셔츠 입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CAMPER L/S SHIRT',90300,50,'BLACK','090S','NH8LN50A_NH8LN50A_primary.jpg',sysdate,'tshirts_shirts','세미 루즈핏의 긴팔 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CAMPER L/S SHIRT',90300,50,'BLACK','095M','NH8LN50A_NH8LN50A_primary.jpg',sysdate,'tshirts_shirts','세미 루즈핏의 긴팔 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CAMPER L/S SHIRT',90300,50,'BLACK','100L','NH8LN50A_NH8LN50A_primary.jpg',sysdate,'tshirts_shirts','세미 루즈핏의 긴팔 셔츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'GRAY','095M','NH8LN70A_NH8LN70A_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'GRAY','100L','NH8LN70A_NH8LN70A_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'GRAY','105XL','NH8LN70A_NH8LN70A_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'DARK_OLIVE','095M','NH8LN70B_NH8LN70B_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'DARK_OLIVE','100L','NH8LN70B_NH8LN70B_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'M ARROYO LW FLANNEL SHIRT',62300,50,'DARK_OLIVE','105XL','NH8LN70B_NH8LN70B_primary.jpg',sysdate,'tshirts_shirts','100% 오가닉 코튼 친환경 원단을 사용한 플란넬 셔츠입니다.');
+
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CITY CHILLER SHIRTS',107100,50,'DARK_GRAY','090S','NH8LP02A_NH8LP02A_primary.jpg',sysdate,'tshirts_shirts','루즈핏 기본형 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CITY CHILLER SHIRTS',107100,50,'DARK_GRAY','095M','NH8LP02A_NH8LP02A_primary.jpg',sysdate,'tshirts_shirts','루즈핏 기본형 셔츠입니다.');
+insert into product values('M'||PNO_SEQ.NEXTVAL,'CITY CHILLER SHIRTS',107100,50,'DARK_GRAY','100L','NH8LP02A_NH8LP02A_primary.jpg',sysdate,'tshirts_shirts','루즈핏 기본형 셔츠입니다.');
+

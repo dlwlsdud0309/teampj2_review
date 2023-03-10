@@ -1,0 +1,70 @@
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+.logInOut-box,.loginJoin-box,.page-more{margin: 5px auto;width: 250px;}
+
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+@media print{.sidebar *,:after,:before{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}
+.sidebar a,a:visited{text-decoration:underline}
+.sidebar a[href]:after{content:" (" attr(href) ")"}
+.sidebar abbr[title]:after{content:" (" attr(title) ")"}
+.sidebar a[href^="#"]:after,a[href^="javascript:"]:after{content:""}}
+.sidebar *,:after,:before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+
+.sidebar a{color:#141414; text-decoration:none}
+.sidebar a:focus,a:hover{color:#ff1814;}
+.sidebar a:focus{outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+.sidebar input[type=button]{padding:5px 15px;border:0;outline:0;background: transparent;}
+.sidebar input[type=button]:focus,input[type=button]:hover{color:#ff1814;}
+.sidebar input[type=button]:focus{outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}
+
+.sidebar {text-align: left;}
+
+@media (max-width:767px){.sidebar .visible-xs{display:block!important}
+	.sidebar table.visible-xs{display:table!important}
+   .sidebar tr.visible-xs{display:table-row!important}   td.visible-xs,th.visible-xs{display:table-cell!important}}
+@media (min-width:768px) and (max-width:991px){.sidebar .visible-sm{display:block!important}
+   .sidebar table.visible-sm{display:table!important}
+   .sidebar tr.visible-sm{display:table-row!important}   
+   .sidebar td.visible-sm,th.visible-sm{display:table-cell!important}}
+@media (min-width:992px) and (max-width:1199px){.sidebar .visible-md{display:inline-block!important}
+   .sidebar table.visible-md{display:table!important}
+   .sidebar tr.visible-md{display:table-row!important}
+   .sidebar td.visible-md,th.visible-md{display:table-cell!important}}
+@media (min-width:1200px){.visible-lg{display:block!important}
+   table.visible-lg{display:table!important}
+   tr.visible-lg{display:table-row!important} td.visible-lg,th.visible-lg{display:table-cell!important}}
+.visible-print{display:none!important}
+@media print{.visible-print{display:block!important}
+   table.visible-print{display:table!important}
+   tr.visible-print{display:table-row!important} td.visible-print,th.visible-print{display:table-cell!important}}
+.visible-print-block{display:none!important}
+@media print{.visible-print-block{display:block!important}}
+.visible-print-inline{display:none!important}
+@media print{.visible-print-inline{display:inline!important}}
+.visible-print-inline-block{display:none!important}
+@media print{.visible-print-inline-block{display:inline-block!important}}
+@media print{.hidden-print{display:none!important}}
+
+.btn{-webkit-transition:all .1s linear;-o-transition:all .1s linear;transition:all .1s linear}
+.fa-icon{color:#000;width:32px;height:32px;display:inline-block;line-height:32px;font-size:15px;text-align:center}
+.sidebar .form-control{box-shadow:none}
+.sidebar .form-control:focus{outline:0;box-shadow:none;border-color:#000}
+
+@media (min-width:768px){main{margin-left:240px}}
+@media (min-width:992px){main{padding:30px;height: auto;}}
+.site-brand,.site-logo{margin-bottom:6px}
+.site-brand{color:#000;font-family:Cabin,Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;display:block;-webkit-transition:all .2s linear;-o-transition:all .2s linear;transition:all .2s linear}
+.site-brand:hover{text-decoration:none}
+
+/* 전체화면 사이드 */
+.sidebar{position:relative;float:left; top:0;bottom:0;width:240px;height:auto;overflow-x:hidden;overflow-y:auto;background-color:#fff;z-index:999;-webkit-transition:left .2s linear;-o-transition:left .2s linear;transition:left .2s linear;left:-240px;top:52px;padding:20px}
+.sidebar .navbar-collapse{padding:0}
+.sidebar.open{left:0;background: #f8f8f8; margin-top: -40px;}
+@media (min-width:768px){.sidebar{margin:10px 0; padding:10px;left:0;top:0}}
+
+/*# sourceMappingURL=main.85741bff.map*/
