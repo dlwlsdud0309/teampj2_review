@@ -216,14 +216,14 @@ public class ReviewController {
 
 //	관리자 리뷰관리페이지
 	@RequestMapping("/reviewAdminManagementreview")
-	public String reviewAdminReviewpage(HttpServletRequest request, Model model) {
+	public String reviewAdminManagementreview(HttpServletRequest request, Model model) {
 		System.out.println("=====reviewAdminManagementreview====");
 		
 		model.addAttribute("request", request);
 		mickyServiceInter=new ReviewAdminManagementreviewService(sqlSession,httpSession);
 		mickyServiceInter.execute(model);
 		
-		return "review/reviewChart";
+		return "review/reviewAdminManagementreview";
 	}
 	
 }

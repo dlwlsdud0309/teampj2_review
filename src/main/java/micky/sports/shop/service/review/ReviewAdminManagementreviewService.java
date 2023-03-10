@@ -36,7 +36,7 @@ public class ReviewAdminManagementreviewService implements MickyServiceInter{
 		String r_no=request.getParameter("r_no");
 		
 		ReviewDao rdao=sqlSession.getMapper(ReviewDao.class);
-		//rdao.delete(r_no);
+	//	rdao.delete(r_no);
 	}
 
 }

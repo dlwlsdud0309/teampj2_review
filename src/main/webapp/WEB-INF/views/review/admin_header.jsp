@@ -40,7 +40,6 @@
 	      <li class="main_lior"><a href="../admin_olist">주문관리</a></li>
 	      <li class="main_lipr"><a href="../admin_product">상품관리</a></li>
 	      <li class="main_lime"><a href="memberlist">회원관리</a></li>
-	      <li class="main_lime"><a href="review/reviewAdminManagementreview">리뷰관리</a></li>
 		  <li class="main_liqn"><a href="adminqnalist">관리자문의</a></li>
 		  
 	      <li class="main_lich"><a href="../admin_chart">Chart</a>
