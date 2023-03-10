@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import micky.sports.shop.service.MickyServiceInter;
 import micky.sports.shop.service.product.ProductDetail_ReviewService;
+import micky.sports.shop.service.review.ReviewAdminManagementreviewService;
 import micky.sports.shop.service.review.ReviewAdminpageService;
 import micky.sports.shop.service.review.ReviewChartService;
 import micky.sports.shop.service.review.ReviewDeleteService;
@@ -208,6 +209,18 @@ public class ReviewController {
 		
 		model.addAttribute("request", request);
 		mickyServiceInter=new ReviewChartService(sqlSession,httpSession);
+		mickyServiceInter.execute(model);
+		
+		return "review/reviewChart";
+	}
+
+//	관리자 리뷰관리페이지
+	@RequestMapping("/reviewAdminManagementreview")
+	public String reviewAdminReviewpage(HttpServletRequest request, Model model) {
+		System.out.println("=====reviewAdminManagementreview====");
+		
+		model.addAttribute("request", request);
+		mickyServiceInter=new ReviewAdminManagementreviewService(sqlSession,httpSession);
 		mickyServiceInter.execute(model);
 		
 		return "review/reviewChart";
