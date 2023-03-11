@@ -18,7 +18,7 @@
 <body>
 <header id="header">
  <!-- header section -->
-<%@include file="../admin/admin_header.jsp" %>
+<%@include file="admin_header.jsp" %>
 </header>
 
 
@@ -27,7 +27,7 @@
 
 <footer>
 <!-- footer section -->
-<%@ include file="../admin/admin_footer.jsp" %>
+<%@ include file="admin_footer.jsp" %>
 </footer>
 </body>
 </html>
