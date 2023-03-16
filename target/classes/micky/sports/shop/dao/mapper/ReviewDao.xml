@@ -312,4 +312,9 @@
 		WHERE P_NAME=#{param1} AND P_FILESRC=#{param2}
 		GROUP BY P_INFO
 	</select>
+	
+	<select id="managementReview" resultType="micky.sports.shop.dto.ReviewDto">
+		SELECT R_NO,M_ID,R_TITLE,R_CONTENT,R_DATE,R_FILESRC,
+		R_SCORE,P_NO,OM_CNTNUM FROM REVIEW
+	</select>
 </mapper>

@@ -28,4 +28,5 @@ public interface ReviewDao {
 	public ArrayList<ProductDto> femaleScore_top5();
 	public ArrayList<ReviewDto> reviewAdmin_ScoreDesc();
 	public ArrayList<ProductDto> productInfo(String p_name, String p_filesrc);
+	public ArrayList<ReviewDto> managementReview();
 }

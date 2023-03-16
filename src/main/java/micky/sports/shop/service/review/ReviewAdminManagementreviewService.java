@@ -1,5 +1,6 @@
 package micky.sports.shop.service.review;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.ui.Model;
 
 import micky.sports.shop.dao.ReviewDao;
+import micky.sports.shop.dto.ReviewDto;
 import micky.sports.shop.service.MickyServiceInter;
 
 public class ReviewAdminManagementreviewService implements MickyServiceInter{
@@ -33,10 +35,10 @@ public class ReviewAdminManagementreviewService implements MickyServiceInter{
 		httpSession = request.getSession();
 		String loginId = (String)httpSession.getAttribute("loginid");
 		
-		String r_no=request.getParameter("r_no");
-		
 		ReviewDao rdao=sqlSession.getMapper(ReviewDao.class);
-	//	rdao.delete(r_no);
+		ArrayList<ReviewDto> management_list=rdao.managementReview();
+		
+		model.addAttribute("management_list", management_list);
 	}
 
 }
