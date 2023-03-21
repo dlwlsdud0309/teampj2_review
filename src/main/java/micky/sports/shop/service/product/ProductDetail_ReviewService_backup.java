@@ -16,11 +16,11 @@ import micky.sports.shop.dto.ProductDto;
 import micky.sports.shop.dto.ReviewDto;
 import micky.sports.shop.service.MickyServiceInter;
 
-public class ProductDetail_ReviewService implements MickyServiceInter{
+public class ProductDetail_ReviewService_backup implements MickyServiceInter{
 	private SqlSession sqlSession;
 	private HttpSession httpsession;
 	
-	public ProductDetail_ReviewService(SqlSession sqlSession,HttpSession httpsession) {
+	public ProductDetail_ReviewService_backup(SqlSession sqlSession,HttpSession httpsession) {
 		this.sqlSession=sqlSession;
 		this.httpsession = httpsession;
 	}
@@ -54,13 +54,9 @@ public class ProductDetail_ReviewService implements MickyServiceInter{
 		
 //		검색기능
 		String selectType=request.getParameter("selectType");
-//		=======================
-		System.out.println("selectType : "+selectType);
-//		=======================
 		
 		String r_group="";
 		String r_score="";
-		String r_score_low="";
 		
 		if (selectType==null||selectType.equals("")) {
 			selectType="r_group";
