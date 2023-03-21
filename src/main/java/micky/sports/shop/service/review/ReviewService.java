@@ -50,8 +50,10 @@ public class ReviewService implements MickyServiceInter{
 //		검색기능
 		String selectType=request.getParameter("selectType");
 		
+		
 		String r_group="";
 		String r_score="";
+//		String r_score_low="";
 		
 		if (selectType==null||selectType.equals("")) {
 			selectType="r_group";
