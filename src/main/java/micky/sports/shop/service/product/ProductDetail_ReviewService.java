@@ -54,6 +54,9 @@ public class ProductDetail_ReviewService implements MickyServiceInter{
 		
 //		검색기능
 		String selectType=request.getParameter("selectType");
+//		=======================
+		System.out.println("selectType : "+selectType);
+//		=======================
 		
 		String r_group="";
 		String r_score="";
