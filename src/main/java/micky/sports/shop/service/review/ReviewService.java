@@ -53,7 +53,12 @@ public class ReviewService implements MickyServiceInter{
 		
 		String r_group="";
 		String r_score="";
-//		String r_score_low="";
+		String r_score_low="";
+		
+//		===================================
+//		System.out.println("왜안나와아앆");
+//		System.out.println("selectType : "+selectType);
+//		===================================
 		
 		if (selectType==null||selectType.equals("")) {
 			selectType="r_group";
