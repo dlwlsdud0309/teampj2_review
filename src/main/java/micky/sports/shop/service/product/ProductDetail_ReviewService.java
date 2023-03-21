@@ -54,13 +54,11 @@ public class ProductDetail_ReviewService implements MickyServiceInter{
 		
 //		검색기능
 		String selectType=request.getParameter("selectType");
-//		=======================
-		System.out.println("selectType : "+selectType);
-//		=======================
+		System.out.println("selectType : "+selectType); //selectType 확인
 		
-		String r_group="";
-		String r_score="";
-		String r_score_low="";
+//		String r_group=""; //초기화 해주지 않아도 되는 것 같다 -참고 : 2023-01-04 수 검색기능
+//		String r_score_high="";
+//		String r_score_low="";
 		
 		if (selectType==null||selectType.equals("")) {
 			selectType="r_group";
