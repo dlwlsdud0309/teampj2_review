@@ -159,7 +159,7 @@
                <select name="selectType" >
                   <option ${param.selectType=="r_recently"?"selected":"" } value="r_group">최신순</option>
                   <option ${param.selectType=="r_score"?"selected":"" } value="r_score">별점 높은순</option>
-                  <option ${param.selectType=="r_score_low"?"selected":"" } value="r_score_low">별점 낮은순</option>
+                  <%-- <option ${param.selectType=="r_score_low"?"selected":"" } value="r_score_low">별점 낮은순</option> --%>
                </select>
             </span><!-- 검색기능 추가 -->
             <!-- 키워드 검색 -->
