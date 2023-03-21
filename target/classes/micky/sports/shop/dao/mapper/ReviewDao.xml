@@ -95,6 +95,7 @@
 		ORDER BY
 		<choose>
 			<when test="param1 eq 'r_group'">R_GROUP DESC</when>
+			<when test="param1 eq 'r_score_low'">R_SCORE ASC, R_GROUP DESC</when>
 			<otherwise>R_SCORE DESC, R_GROUP DESC</otherwise>
 		</choose>
 		) R
