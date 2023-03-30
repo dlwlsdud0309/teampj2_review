@@ -365,33 +365,32 @@
 	</c:forEach>
 	</ul>
 <h4>리뷰 순위 top5</h4>
-	<c:forEach items="${totalReview_top5 }" var="totalreviewdesc">
-		${totalreviewdesc.productDto.p_name }
-	</c:forEach>
-	<%-- <ul class="productChart">
+<div class="productChartPackage">
+	<ul class="productChart">
 	<c:forEach items="${totalReview_top5 }" var="totalreviewdesc">
 		<li>
 			<div class="pdtthumbnail">
-				<a href="../product/productDetail?pname=${totalreviewdesc.p_name }&pfilesrc=${totalreviewdesc.p_filesrc }">
-				<img src="../resources/img/productimg/${totalreviewdesc.p_filesrc }" alt="" />
+				<a href="../product/productDetail?pname=${totalreviewdesc.productDto.p_name }&pfilesrc=${totalreviewdesc.productDto.p_filesrc }">
+				<img src="../resources/img/productimg/${totalreviewdesc.productDto.p_filesrc }" alt="" />
 				</a>
 			</div>
 			<div class="pdtdetail">
 				<p class="pname">
-				<a href="../product/productDetail?pname=${totalreviewdesc.p_name}&pfilesrc=${totalreviewdesc.p_filesrc}">
-				${totalreviewdesc.p_name}
+				<a href="../product/productDetail?pname=${totalreviewdesc.productDto.p_name }&pfilesrc=${totalreviewdesc.productDto.p_filesrc }">
+				${totalreviewdesc.productDto.p_name}
 				</a>
 				</p>
 				<p class="ppcolor">
-					<span>${totalreviewdesc.p_color}</span>
+					<span style="color: #ff7f00;">★</span><span>${totalreviewdesc.productDto.avgscore}</span>
 				</p>
 				<p class="pprice">
-					<span><fmt:formatNumber value="${totalreviewdesc.p_price}" pattern="###,###"/>원</span>
+					<span><fmt:formatNumber value="${totalreviewdesc.productDto.p_price}" pattern="###,###"/>원</span>
 				</p>
 			</div>
 		</li>	
 	</c:forEach>
-	</ul> --%>
+	</ul>
+</div>
 </div>
 
 </body>
