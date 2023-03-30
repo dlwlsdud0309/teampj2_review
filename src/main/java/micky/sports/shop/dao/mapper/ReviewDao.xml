@@ -292,7 +292,7 @@
 		WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 
-	<select id="reviewAdmin_ScoreDesc" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
+	<select id="reviewAdmin_ScoreDesc" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
 		SELECT ROWNUM,R.* FROM
 		(
 		SELECT P.P_NAME P_NAME,ROUND(AVG(R.R_SCORE),1) AVGSCORE
@@ -319,14 +319,15 @@
 		R_SCORE,P_NO,OM_CNTNUM FROM REVIEW
 	</select>
 	
-	<select id="totalReview_top5" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
+	<select id="totalReview_top5" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
 		SELECT ROWNUM,R.*
-		FROM (SELECT P.P_NAME,COUNT(R.R_CONTENT) AS COUNT
-		FROM MEMBER M, REVIEW R, PRODUCT P
+		FROM (SELECT P.P_NAME,COUNT(R.R_CONTENT) AS COUNT,P.P_PRICE
+		FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
 		WHERE M.M_ID=R.M_ID
 		AND R.P_NO=P.P_NO
-		GROUP BY P.P_NAME
-		ORDER BY COUNT DESC, P.P_NAME ASC) R
+		AND O.P_NO=P.P_NO
+		GROUP BY P.P_NAME,P.P_PRICE
+		ORDER BY COUNT DESC, P.P_NAME ASC, SUM(O.U_CNT) DESC) R
 		WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 </mapper>
