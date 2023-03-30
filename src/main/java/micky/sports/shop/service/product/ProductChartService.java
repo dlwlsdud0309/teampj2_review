@@ -53,8 +53,7 @@ public class ProductChartService implements MickyServiceInter{
 		
 		ArrayList<ProductDto> maleScore_top5=rdao.maleScore_top5();
 		ArrayList<ProductDto> femaleScore_top5=rdao.femaleScore_top5();
-		
-		ArrayList<ProductDto> totalReview_top5=rdao.totalReview_top5();
+		ArrayList<ReviewDto> totalReview_top5=rdao.totalReview_top5();
 
 		model.addAttribute("chartScore_top5", chartScore_top5);
 		model.addAttribute("maleScore_top5", maleScore_top5);

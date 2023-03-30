@@ -319,7 +319,7 @@
 		R_SCORE,P_NO,OM_CNTNUM FROM REVIEW
 	</select>
 	
-	<select id="totalReview_top5" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
+	<select id="totalReview_top5" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
 		SELECT ROWNUM,R.*
 		FROM (SELECT P.P_NAME,COUNT(R.R_CONTENT) AS COUNT,P.P_PRICE
 		FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
