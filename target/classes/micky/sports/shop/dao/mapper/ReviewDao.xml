@@ -318,4 +318,15 @@
 		SELECT R_NO,M_ID,R_TITLE,R_CONTENT,R_DATE,R_FILESRC,
 		R_SCORE,P_NO,OM_CNTNUM FROM REVIEW
 	</select>
+	
+	<select id="totalReview_top5" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
+		SELECT ROWNUM,R.*
+		FROM (SELECT P.P_NAME,COUNT(R.R_CONTENT) AS COUNT
+		FROM MEMBER M, REVIEW R, PRODUCT P
+		WHERE M.M_ID=R.M_ID
+		AND R.P_NO=P.P_NO
+		GROUP BY P.P_NAME
+		ORDER BY COUNT DESC, P.P_NAME ASC) R
+		WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
 </mapper>
