@@ -366,7 +366,7 @@
 	</ul>
 <h4>리뷰 순위 top5</h4>
 	<c:forEach items="totalreviewdesc" var="totalreviewdesc">
-		${totalreviewdesc.productDto.p_name }
+		<%-- ${totalreviewdesc.productDto.p_name } --%>
 	</c:forEach>
 	<%-- <ul class="productChart">
 	<c:forEach items="${totalReview_top5 }" var="totalreviewdesc">

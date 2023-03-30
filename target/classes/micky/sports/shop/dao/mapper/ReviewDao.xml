@@ -292,7 +292,7 @@
 		WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 
-	<select id="reviewAdmin_ScoreDesc" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
+	<select id="reviewAdmin_ScoreDesc" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
 		SELECT ROWNUM,R.* FROM
 		(
 		SELECT P.P_NAME P_NAME,ROUND(AVG(R.R_SCORE),1) AVGSCORE
