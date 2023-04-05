@@ -247,8 +247,7 @@
 	</select>
 	
 	<select id="chartScore_top5" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
-		SELECT ROWNUM,R.* FROM
-		(
+		SELECT ROWNUM,R.* FROM (
 		SELECT P.P_NAME,P.P_COLOR,P.P_PRICE,P.P_FILESRC,ROUND(AVG(R.R_SCORE),1) AS AVGSCORE,SUM(O.U_CNT) AS CNTSUM
 		FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
 		WHERE M.M_ID=R.M_ID
@@ -263,8 +262,7 @@
 	</select>
 	
 	<select id="maleScore_top5" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
-		SELECT ROWNUM, M.* FROM
-		(
+		SELECT ROWNUM, M.* FROM (
 		SELECT P.P_NAME,P.P_COLOR,P.P_PRICE,P.P_FILESRC,SUM(O.U_CNT) AS CNTSUM,M.M_GENDER
 		FROM MEMBER M, ORDER_MEMBER O, PRODUCT P
 		WHERE M.M_ID=O.M_ID
@@ -278,8 +276,7 @@
 	</select>
 
 	<select id="femaleScore_top5" parameterType="micky.sports.shop.dto.ProductDto" resultMap="ProductDto">
-		SELECT ROWNUM, M.* FROM
-		(
+		SELECT ROWNUM, M.* FROM (
 		SELECT P.P_NAME,P.P_COLOR,P.P_PRICE,P.P_FILESRC,SUM(O.U_CNT) AS CNTSUM,M.M_GENDER
 		FROM MEMBER M, ORDER_MEMBER O, PRODUCT P
 		WHERE M.M_ID=O.M_ID
@@ -293,8 +290,7 @@
 	</select>
 
 	<select id="reviewAdmin_ScoreDesc" parameterType="micky.sports.shop.dto.ReviewDto" resultMap="ReviewDto">
-		SELECT ROWNUM,R.* FROM
-		(
+		SELECT ROWNUM,R.* FROM (
 		SELECT P.P_NAME P_NAME,ROUND(AVG(R.R_SCORE),1) AVGSCORE
 		FROM MEMBER M, REVIEW R, PRODUCT P, ORDER_MEMBER O
 		WHERE M.M_ID=R.M_ID
